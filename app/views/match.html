@@ -1,0 +1,116 @@
+<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+          
+		 <!--
+		  <h1 class="page-header">人员查询</h1>
+          <div class="row placeholders">
+            <div class="col-xs-6 col-sm-3 placeholder">
+              <img data-src="holder.js/200x200/auto/sky" class="img-responsive" alt="Generic placeholder thumbnail">
+              <h4>Label</h4>
+              <span class="text-muted">Something else</span>
+            </div>
+            <div class="col-xs-6 col-sm-3 placeholder">
+              <img data-src="holder.js/200x200/auto/vine" class="img-responsive" alt="Generic placeholder thumbnail">
+              <h4>Label</h4>
+              <span class="text-muted">Something else</span>
+            </div>
+            <div class="col-xs-6 col-sm-3 placeholder">
+              <img data-src="holder.js/200x200/auto/sky" class="img-responsive" alt="Generic placeholder thumbnail">
+              <h4>Label</h4>
+              <span class="text-muted">Something else</span>
+            </div>
+            <div class="col-xs-6 col-sm-3 placeholder">
+              <img data-src="holder.js/200x200/auto/vine" class="img-responsive" alt="Generic placeholder thumbnail">
+              <h4>Label</h4>
+              <span class="text-muted">Something else</span>
+            </div>
+          </div>
+		-->
+		<!--
+          <h2 class="sub-header">约会统计表</h2>
+		-->  
+		  <div class="container-fluid">
+			<div class="row-fluid">
+				<div class="span12">
+					<form class="form-horizontal">
+						
+						<fieldset>
+						   <div class="form-group">
+							  <label for="eventTitle" class="col-md-2 control-label">姓名</label>
+							  <div class="input-group date eventTitle col-md-2">
+								<input class="form-control" size="16" type="text" ng-model="selectedPeople.name" id="eventTitle" required/>
+							  </div>
+						  </div> 
+						  
+						  <div class="form-group">
+							  <label for="eventTitle" class="col-md-2 control-label">性别</label>
+							  <div class="input-group date eventTitle col-md-2">
+								<select class="form-control" ng-model="selectedPeople.gender" >
+								  <option value="男">男</option>
+								  <option value="女">女</option>
+								</select>
+								
+							  </div>
+						  </div>
+						</fieldset>
+					<div class="modal-footer">						
+						<!--data-dismiss="modal"-->
+						<button type="button" class="btn btn-primary">查询</button>						
+					 </div>	
+						
+						
+					</form>
+					
+				</div>
+			</div>
+			
+			<div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+				  <th>&nbsp;</th>	
+                  <th>编号</th>
+                  <th>注册日期</th>
+                  <th>收费</th>
+                  <th>姓名</th>
+                  <th>出生年月</th>
+				  <th>身高</th>
+				  <th>学历</th>
+				  <th>户籍</th>
+				  <th>工作单位</th>
+				  <th>收入</th>
+				  <th>婚史</th>
+				  <th>子女</th>
+				  <th>住房</th>
+				  <th>联系电话</th>
+				  <th>&nbsp;</th>
+                </tr>
+              </thead>
+              <tbody>
+				<tr ng-repeat="people in peoples  | filter:query">
+				    <td>&nbsp;</td>
+					<td>{{people.id}}</td>
+					<td>{{people.registerDate}}</td>
+					<td>{{people.fee}}</td>
+					<td>{{people.name}}</td>
+					<td>{{people.birthDate}}</td>
+					<td>{{people.height}}</td>
+					<td>{{people.education}}</td>
+					<td>{{people.census}}</td>
+					<td>{{people.company}}</td>
+					<td>{{people.salary}}</td>
+					<td>{{people.married}}</td>
+					<td>{{people.children}}</td>
+					<td>{{people.house}}</td>
+					<td>{{people.phone}}</td>
+					<td>
+						 &nbsp;
+					</td>
+				</tr>
+                
+              </tbody>
+            </table>
+			
+          </div>
+		</div>
+          
+</div>
