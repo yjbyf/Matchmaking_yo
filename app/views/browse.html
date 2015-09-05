@@ -1,149 +1,163 @@
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-          
-		 <!--
-		 <h1 class="page-header">人员浏览及维护</h1>
-          <div class="row placeholders">
-            <div class="col-xs-6 col-sm-3 placeholder">
-              <img data-src="holder.js/200x200/auto/sky" class="img-responsive" alt="Generic placeholder thumbnail">
-              <h4>Label</h4>
-              <span class="text-muted">Something else</span>
-            </div>
-            <div class="col-xs-6 col-sm-3 placeholder">
-              <img data-src="holder.js/200x200/auto/vine" class="img-responsive" alt="Generic placeholder thumbnail">
-              <h4>Label</h4>
-              <span class="text-muted">Something else</span>
-            </div>
-            <div class="col-xs-6 col-sm-3 placeholder">
-              <img data-src="holder.js/200x200/auto/sky" class="img-responsive" alt="Generic placeholder thumbnail">
-              <h4>Label</h4>
-              <span class="text-muted">Something else</span>
-            </div>
-            <div class="col-xs-6 col-sm-3 placeholder">
-              <img data-src="holder.js/200x200/auto/vine" class="img-responsive" alt="Generic placeholder thumbnail">
-              <h4>Label</h4>
-              <span class="text-muted">Something else</span>
-            </div>
+
+  <!--
+      <h1 class="page-header">人员浏览及维护</h1>
+       <div class="row placeholders">
+         <div class="col-xs-6 col-sm-3 placeholder">
+           <img data-src="holder.js/200x200/auto/sky" class="img-responsive" alt="Generic placeholder thumbnail">
+           <h4>Label</h4>
+           <span class="text-muted">Something else</span>
+         </div>
+         <div class="col-xs-6 col-sm-3 placeholder">
+           <img data-src="holder.js/200x200/auto/vine" class="img-responsive" alt="Generic placeholder thumbnail">
+           <h4>Label</h4>
+           <span class="text-muted">Something else</span>
+         </div>
+         <div class="col-xs-6 col-sm-3 placeholder">
+           <img data-src="holder.js/200x200/auto/sky" class="img-responsive" alt="Generic placeholder thumbnail">
+           <h4>Label</h4>
+           <span class="text-muted">Something else</span>
+         </div>
+         <div class="col-xs-6 col-sm-3 placeholder">
+           <img data-src="holder.js/200x200/auto/vine" class="img-responsive" alt="Generic placeholder thumbnail">
+           <h4>Label</h4>
+           <span class="text-muted">Something else</span>
+         </div>
+       </div>
+     -->
+  <!--
+        <h2 class="sub-header">约会统计表</h2>
+      -->
+
+  <form action="" class="form-horizontal" role="form" name="searchForm">
+    <fieldset>
+      <div class="form-group">
+        <label for="name" class="col-md-2 control-label">查询</label>
+
+        <div class="input-group date eventTitle col-md-6">
+          <input class="form-control" size="16" type="text" ng-model="query" id="query" required/>
+        </div>
+      </div>
+    </fieldset>
+  </form>
+
+  <div class="table-responsive">
+    <table class="table table-striped table-hover">
+      <thead>
+      <tr>
+        <th>&nbsp;</th>
+        <th>编号</th>
+        <th>注册日期</th>
+        <th>收费</th>
+        <th>姓名</th>
+        <th>出生年月</th>
+        <th>身高</th>
+        <th>学历</th>
+        <th>户籍</th>
+        <th>工作单位</th>
+        <th>收入</th>
+        <th>婚史</th>
+        <th>子女</th>
+        <th>住房</th>
+        <th>联系电话</th>
+        <th>&nbsp;</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr ng-repeat="people in peoples  | filter:query">
+        <td><input type="checkbox" value="{{people.id}}"></td>
+        <td>{{people.id}}</td>
+        <td>{{people.registerDate}}</td>
+        <td>{{people.fee}}</td>
+        <td>{{people.name}}</td>
+        <td>{{people.birthDate}}</td>
+        <td>{{people.height}}</td>
+        <td>{{people.education}}</td>
+        <td>{{people.census}}</td>
+        <td>{{people.company}}</td>
+        <td>{{people.salary}}</td>
+        <td>{{people.married}}</td>
+        <td>{{people.children}}</td>
+        <td>{{people.house}}</td>
+        <td>{{people.phone}}</td>
+        <td>
+          <div class="controls">
+            <button class="btn btn-primary" ng-click="modRecord('{{people.id}}');">修改</button>
           </div>
-		-->
-		<!--
-          <h2 class="sub-header">约会统计表</h2>
-		-->  
-		<div class="row placeholders">
-            <div class="col-xs-6 col-sm-3 placeholder">              
-			  查询: <input ng-model="query">
-            </div>
-		</div>	
-		
-          <div class="table-responsive">
-            <table class="table table-striped">
-              <thead>
-                <tr>
-				  <th>&nbsp;</th>	
-                  <th>编号</th>
-                  <th>注册日期</th>
-                  <th>收费</th>
-                  <th>姓名</th>
-                  <th>出生年月</th>
-				  <th>身高</th>
-				  <th>学历</th>
-				  <th>户籍</th>
-				  <th>工作单位</th>
-				  <th>收入</th>
-				  <th>婚史</th>
-				  <th>子女</th>
-				  <th>住房</th>
-				  <th>联系电话</th>
-				  <th>&nbsp;</th>
-                </tr>
-              </thead>
-              <tbody>
-				<tr ng-repeat="people in peoples  | filter:query">
-				    <td><input type="checkbox" value="{{people.id}}"></td>
-					<td>{{people.id}}</td>
-					<td>{{people.registerDate}}</td>
-					<td>{{people.fee}}</td>
-					<td>{{people.name}}</td>
-					<td>{{people.birthDate}}</td>
-					<td>{{people.height}}</td>
-					<td>{{people.education}}</td>
-					<td>{{people.census}}</td>
-					<td>{{people.company}}</td>
-					<td>{{people.salary}}</td>
-					<td>{{people.married}}</td>
-					<td>{{people.children}}</td>
-					<td>{{people.house}}</td>
-					<td>{{people.phone}}</td>
-					<td>
-						 <div class="controls">
-							<button class="btn btn-success" ng-click="modRecord('{{people.id}}');">修改</button>
-						  </div>
-					</td>
-				</tr>
-                
-              </tbody>
-            </table>
-			<div class="controls">
-				<button class="btn btn-success" ng-click="newRecord();">新增</button>
-				<button class="btn btn-success">删除</button>
-			</div>
-          </div>
-		  
-			<div class="modal fade" id="peopleModal" tabindex="-1" role="dialog" 
-			   aria-labelledby="myModalLabel" aria-hidden="true">
-			   <div class="modal-dialog">
-				  <div class="modal-content">
-					 <div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal" 
-						   aria-hidden="true">×
-						</button>
-						<h3 id="myModalLabel">
-						  <div ng-if="selectedPeopleId!=null">编辑人员</div>
-						  <div ng-if="selectedPeopleId==null">新增人员</div>
-						</h3>
-					 </div>
-					 <div class="modal-body">
-					  <form action="" class="form-horizontal"  role="form" name="form">
-						<input id="eventId" type="hidden" ng-model="selectedEventId"/>
-						<fieldset>
-						  <div class="form-group">
-							  <label for="eventTitle" class="col-md-2 control-label">姓名</label>
-							  <div class="input-group date eventTitle col-md-6">
-								<input class="form-control" size="16" type="text" ng-model="selectedPeople.name" id="eventTitle" required/>
-							  </div>
-						  </div> 
+        </td>
+      </tr>
 
-						  <div class="form-group">
-							  <label for="eventTitle" class="col-md-2 control-label">性别</label>
-							  <div class="input-group date eventTitle col-md-6">
-								<select class="form-control" ng-model="selectedPeople.gender" >
-								  <option value="男">男</option>
-								  <option value="女">女</option>
-								</select>
-								
-							  </div>
-						  </div>
+      </tbody>
+    </table>
+    <div class="controls">
+      <button class="btn btn-primary" ng-click="newRecord();">新增</button>
+      <button class="btn btn-primary">删除</button>
+    </div>
+  </div>
 
-						  <div class="form-group">
-							  <label for="eventTitle" class="col-md-2 control-label">出生日期</label>
-							  <div class="input-group date eventTitle col-md-6">
-								<input class="form-control" size="16" type="text" ng-model="selectedPeople.birthDate" id="eventTitle" required/>
-							  </div>
-						  </div>
-						  
-						 
-						</fieldset>
-					  </form>  
-							 
+  <div class="modal fade" id="peopleModal" tabindex="-1" role="dialog"
+       aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal"
+                  aria-hidden="true">×
+          </button>
+          <h3 id="myModalLabel">
+            <div ng-if="selectedPeopleId!=null">编辑人员</div>
+            <div ng-if="selectedPeopleId==null">新增人员</div>
+          </h3>
+        </div>
+        <div class="modal-body">
+          <form action="" class="form-horizontal" role="form" name="form">
+            <input id="eventId" type="hidden" ng-model="selectedEventId"/>
+            <fieldset>
+              <div class="form-group">
+                <label for="name" class="col-md-2 control-label">姓名</label>
 
-					 </div>
-					 <div class="modal-footer">						
-						<!--data-dismiss="modal"-->
-						<button type="button" class="btn btn-primary" >保存</button>
-						
-					 </div>
-						 
-				  </div><!-- /.modal-content -->
-			   </div><!-- /.modal-dialog -->
-			</div><!-- /.modal -->
-		  
+                <div class="input-group date eventTitle col-md-6">
+                  <input class="form-control" size="16" type="text" ng-model="selectedPeople.name" id="name" required/>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="gender" class="col-md-2 control-label">性别</label>
+
+                <div class="input-group date eventTitle col-md-6">
+                  <select id="gender" class="form-control" ng-model="selectedPeople.gender">
+                    <option value="男">男</option>
+                    <option value="女">女</option>
+                  </select>
+
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="birthDate" class="col-md-2 control-label">出生日期</label>
+
+                <div class="input-group date eventTitle col-md-6">
+                  <input class="form-control" size="16" type="text" ng-model="selectedPeople.birthDate" id="birthDate"
+                         required/>
+                </div>
+              </div>
+
+
+            </fieldset>
+          </form>
+
+
+        </div>
+        <div class="modal-footer">
+          <!--data-dismiss="modal"-->
+          <button type="button" class="btn btn-primary">保存</button>
+
+        </div>
+
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
+  <!-- /.modal -->
+
 </div>

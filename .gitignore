@@ -3,5 +3,6 @@ bower_components/
 *.log
 .sass-cache/
 .tmp/
+.idea/
 build/
 dist/
