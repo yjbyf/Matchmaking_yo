@@ -8,7 +8,7 @@
  *
  * Main module of the application.
  */
-angular
+var myApp = angular
   .module('angularApp', [
     'ngAnimate',
     'ngCookies',
@@ -16,8 +16,9 @@ angular
     'ngRoute',
     'ngSanitize',
     'ngTouch'
-  ])
-  .config(function ($routeProvider) {
+  ]);
+
+  myApp.config(function ($routeProvider) {
     $routeProvider
       .when('/browse', {
         templateUrl: 'views/browse.html',
@@ -29,8 +30,14 @@ angular
         controller: 'MatchCtrl',
         controllerAs: 'match'
       })
+      .when('/user', {
+        templateUrl: 'views/user.html',
+        controller: 'UserCtrl',
+        controllerAs: 'user'
+      })
       .otherwise({
         redirectTo: '/browse'
       });
-  })
-  ;
+  })  ;
+
+
