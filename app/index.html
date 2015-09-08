@@ -51,8 +51,8 @@
 
 <div class="container-fluid" >
   <div class="row">
-    <div class="col-sm-3 col-md-2 sidebar" ng-controller="MenuCtrl">
-      <ul class="nav nav-sidebar" >
+    <div class="col-sm-3 col-md-2 sidebar" ng-controller="MenuCtrl" >
+      <ul class="nav nav-sidebar" ng-show="visible">
         <li ng-class="{ active: isActive('/browse')}"><a href="#/browse">人员浏览及维护</a></li>
         <!--<li><a href="#">人员维护</a></li>
         <li><a href="#">Analytics</a></li>
@@ -60,12 +60,16 @@
         -->
       </ul>
 
-      <ul class="nav nav-sidebar">
+      <ul class="nav nav-sidebar" ng-show="visible">
         <li ng-class="{ active: isActive('/match')}"><a href="#/match">人员查询</a></li>
       </ul>
 
-      <ul class="nav nav-sidebar">
+      <ul class="nav nav-sidebar" ng-show="visible">
         <li ng-class="{ active: isActive('/user')}"><a href="#/user">用户管理</a></li>
+      </ul>
+
+      <ul class="nav nav-sidebar" ng-show="visible">
+        <li ng-class="{ active: isActive('/login')}"><a href="#/">退出登录</a></li>
       </ul>
 
       <!--
@@ -101,6 +105,7 @@
 
 <!-- build:js({.tmp,app}) scripts/scripts.js -->
 <script src="scripts/app.js"></script>
+<script src="scripts/controllers/login.js"></script>
 <script src="scripts/controllers/menu.js"></script>
 <script src="scripts/controllers/browse.js"></script>
 <script src="scripts/controllers/match.js"></script>

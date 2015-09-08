@@ -21,6 +21,11 @@ var myApp = angular
 
 myApp.config(function ($routeProvider) {
   $routeProvider
+    .when('/login', {
+      templateUrl: 'views/login.html',
+      controller: 'LoginCtrl',
+      controllerAs: 'login'
+    })
     .when('/browse', {
       templateUrl: 'views/browse.html',
       controller: 'BrowseCtrl',
