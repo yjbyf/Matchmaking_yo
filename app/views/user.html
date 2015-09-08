@@ -30,7 +30,7 @@
         <td>
           <div class="controls">
             <button class="btn btn-primary" ng-click="modRecord('{{user}}');">修改密码</button>
-            <button class="btn btn-primary" ng-click="delRecord('{{user}}');">删除</button>
+            <button class="btn btn-primary" ng-click="delRecord('{{user.id}}');">删除</button>
           </div>
         </td>
       </tr>
@@ -42,7 +42,7 @@
 
     </div>
   </div>
-
+<!---新增和编辑用户--->
   <div class="modal fade" id="userModal" tabindex="-1" role="dialog"
        aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -58,7 +58,7 @@
         </div>
         <div class="modal-body">
           <form action="" class="form-horizontal" role="form" name="form">
-            <input id="eventId" type="hidden" ng-model="selectedEventId"/>
+            <input id="userId" type="hidden" ng-model="selectedUser.id"/>
             <fieldset>
               <div class="form-group">
                 <label for="userName" class="col-md-2 control-label">用户名</label>
@@ -81,6 +81,39 @@
         <div class="modal-footer">
           <!--data-dismiss="modal"-->
           <button type="button" class="btn btn-primary" ng-click="saveRecord();">保存</button>
+
+        </div>
+
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
+  <!-- /.modal -->
+
+<!---删除确认框-->
+  <div class="modal fade" id="confirmModal" tabindex="-1" role="dialog"
+       aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal"
+                  aria-hidden="true">×
+          </button>
+          <h3 id="confirmModalLabel">
+            <div>系统提示</div>
+          </h3>
+        </div>
+        <div class="modal-body">
+          <h4>
+            <div>是否删除？</div>
+          </h4>
+        </div>
+
+        <div class="modal-footer">
+          <!--data-dismiss="modal"-->
+          <button type="button" class="btn btn-primary" ng-click="confirmDelete();">确认</button>
+          <button type="button" class="btn btn-primary" ng-click="cancelDelete();">取消</button>
 
         </div>
 

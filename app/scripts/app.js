@@ -15,7 +15,8 @@ var myApp = angular
     'ngResource',
     'ngRoute',
     'ngSanitize',
-    'ngTouch'
+    'ngTouch',
+    'angular-md5'
   ]);
 
 myApp.config(function ($routeProvider) {
@@ -44,7 +45,7 @@ myApp.constant('config', {
   appName: 'My App',
   appVersion: 2.0,
   apiUrl: 'http://www.google.com?api',
-  userUrl :':8080/user',
+  userUrl :':8080/user/',
   urlHTTP:'http://'
 });
 
