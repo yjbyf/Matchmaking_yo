@@ -9,17 +9,21 @@
  * Controller of the angularApp
  */
 angular.module('angularApp')
-  .controller('UserCtrl', function ($scope,$http,$location) {
-    $scope.webServiceRootUrl = "http://"+$location.host()+":8080/user";
-    $scope.webServicesSearchUrl = $scope.webServiceRootUrl  +  "/search/findByUserName";
-    //$scope.userName = "";
-    //$scope.password = "";
+  .controller('UserCtrl',['$scope','$http','$location','config', function ($scope,$http,$location,config) {
 
-    $http.get($scope.webServiceRootUrl).then(function(data){
-      console.log(data);
-      console.log(data.data._embedded.user);
-      $scope.users = data.data._embedded.user;
-    });
+    $scope.refresh = function(){
+      console.log(config.apiUrl);
+      $http.get($scope.webServiceRootUrl).then(function(data){
+        //console.log(data);
+        console.log(data.data._embedded.user);
+        $scope.users = data.data._embedded.user;
+      });
+    };
+    $scope.webServiceRootUrl = config.urlHTTP+$location.host()+config.userUrl;//":8080/user";
+    //$scope.webServicesSearchUrl = $scope.webServiceRootUrl  +  "/search/findByUserName";
+
+    $scope.refresh();
+
 
     /*
     $scope.users = [
@@ -36,21 +40,21 @@ angular.module('angularApp')
     $scope.newRecord = function () {
       $scope.selectedUserId = null;
       $scope.selectedUser = null;
+      $scope.userNameReadonly = '';
       $('#userModal').modal();
     };
 
-    $scope.modRecord = function (id) {
+    $scope.modRecord = function (user) {
+      var myObject = eval('(' + user + ')');
+      var href = myObject._links.self.href;
+      var id = href.substr(href.lastIndexOf("/")+1);
+      console.log(href);
+      console.log();
+      //console.log(myObject._links.self.href);
+      $scope.userNameReadonly = 'readonly';
       $scope.selectedUserId = id;
-      //console.log(id);
-      $.each($scope.users, function (i, user) {
-        //console.log(people.id);
-        if (user.id === id) {
-          console.log(i + ' ' + user.userName);
-          $scope.selectedUser = user;
-        }
 
-      });
-
+      $scope.selectedUser =  myObject;
       $('#userModal').modal();
     };
 
@@ -70,15 +74,16 @@ angular.module('angularApp')
         }
       }).
         then(function(response) {
-          console.log("done add");
+          console.log("done add"+response);
           $('#userModal').modal('toggle');
-          //todo refresh grid
+          //refresh grid
+          $scope.refresh();
           // this callback will be called asynchronously
           // when the response is available
         }, function(response) {
-          console.log("done error");
+          console.log("done error"+response);
           // called asynchronously if an error occurs
           // or server returns response with an error status.
         });
     };
-  });
+  }]);

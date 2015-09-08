@@ -29,7 +29,7 @@
         <td>*****************</td>
         <td>
           <div class="controls">
-            <button class="btn btn-primary" ng-click="modRecord('{{user.id}}');">修改</button>
+            <button class="btn btn-primary" ng-click="modRecord('{{user}}');">修改密码</button>
           </div>
         </td>
       </tr>
@@ -51,7 +51,7 @@
                   aria-hidden="true">×
           </button>
           <h3 id="myModalLabel">
-            <div ng-if="selectedUserId!=null">编辑用户</div>
+            <div ng-if="selectedUserId!=null">修改密码</div>
             <div ng-if="selectedUserId==null">新增用户</div>
           </h3>
         </div>
@@ -62,7 +62,7 @@
               <div class="form-group">
                 <label for="userName" class="col-md-2 control-label">用户名</label>
                 <div class="input-group date eventTitle col-md-6">
-                  <input class="form-control" size="16" type="text" ng-model="selectedUser.userName" id="userName" required/>
+                  <input class="form-control" size="16" type="text" ng-model="selectedUser.userName" id="userName"  ng-readonly="userNameReadonly"/>
                 </div>
               </div>
 
