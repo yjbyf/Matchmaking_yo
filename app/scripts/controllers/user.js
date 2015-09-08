@@ -15,8 +15,16 @@ angular.module('angularApp')
       console.log(config.apiUrl);
       $http.get($scope.webServiceRootUrl).then(function(data){
         //console.log(data);
-        console.log(data.data._embedded.user);
+        //console.log(data.data._embedded.user);
         $scope.users = data.data._embedded.user;
+        for(var i=0;i<$scope.users.length;i++){
+          var user = $scope.users[i];
+          var href = user._links.self.href;
+          var id = href.substr(href.lastIndexOf("/")+1);
+          console.log(id);
+          user.id = id;
+        }
+
       });
     };
     $scope.webServiceRootUrl = config.urlHTTP+$location.host()+config.userUrl;//":8080/user";
@@ -46,16 +54,24 @@ angular.module('angularApp')
 
     $scope.modRecord = function (user) {
       var myObject = eval('(' + user + ')');
-      var href = myObject._links.self.href;
-      var id = href.substr(href.lastIndexOf("/")+1);
-      console.log(href);
-      console.log();
+      //var href = myObject._links.self.href;
+      var id = myObject.id;
+      //console.log(href);
+      //console.log();
       //console.log(myObject._links.self.href);
       $scope.userNameReadonly = 'readonly';
       $scope.selectedUserId = id;
 
       $scope.selectedUser =  myObject;
       $('#userModal').modal();
+    };
+
+    $scope.delRecord = function (user) {
+      var myObject = eval('(' + user + ')');
+      //var href = myObject._links.self.href;
+      var id = myObject.id;
+      //TODO CONFIRM DELTE AND DO DELETE WITH HTTP
+      console.log("delete"+myObject.id);
     };
 
     $scope.saveRecord = function(){
