@@ -50,11 +50,13 @@ angular.module('angularApp')
       $scope.selectedUserId = null;
       $scope.selectedUser = null;
       $scope.userNameReadonly = '';
+      $scope.btnSaveClicked = false;
       $('#userModal').modal();
     };
 
     $scope.modRecord = function (user) {
       //var myObject = eval('(' + user + ')');
+      $scope.btnSaveClicked = false;
       var myObject = JSON.parse(user);
       //var href = myObject._links.self.href;
       var id = myObject.id;
@@ -65,6 +67,7 @@ angular.module('angularApp')
       $scope.selectedUserId = id;
 
       $scope.selectedUser = myObject;
+      $scope.selectedUser.password = "";
       $('#userModal').modal();
     };
 
@@ -99,7 +102,12 @@ angular.module('angularApp')
       $("#confirmModal").modal('toggle');
     };
 
-    $scope.saveRecord = function () {
+    $scope.saveRecord = function (formValid) {
+      //$scope.btnClicked = true;
+      $scope.btnSaveClicked = true;
+      if(!formValid) {
+        return false;
+      }
       console.log($scope.selectedUser.userName);
       console.log($scope.selectedUser.password);
       console.log($scope.selectedUser.id);

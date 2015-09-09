@@ -13,7 +13,7 @@ angular.module('angularApp')
 
     $scope.isActive = function (viewLocation) {
       //console.log($location.path());
-      console.log("login or not:"+$rootScope.authenticated);
+      //console.log("login or not:"+$rootScope.authenticated);
       $scope.visible = $rootScope.authenticated;
       //TODO 登录后$rootScope.authenticated =true
       if (!$rootScope.authenticated) {

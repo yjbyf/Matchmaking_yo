@@ -19,7 +19,9 @@ var myApp = angular
     'angular-md5'
   ]);
 
-myApp.config(function ($routeProvider) {
+
+//config.$inject = ['$routeProvider'];
+function config($routeProvider) {
   $routeProvider
     .when('/login', {
       templateUrl: 'views/login.html',
@@ -44,14 +46,34 @@ myApp.config(function ($routeProvider) {
     .otherwise({
       redirectTo: '/browse'
     });
-});
+}
+
+myApp.config(config);
 
 myApp.constant('config', {
-  appName: 'My App',
-  appVersion: 2.0,
-  apiUrl: 'http://www.google.com?api',
   userUrl :':8080/user/',
   urlHTTP:'http://'
 });
+
+function run($rootScope, $location, $cookieStore, $http) {
+  // keep user logged in after page refresh
+  console.log("app run"+$rootScope.globals);
+  $rootScope.globals = $cookieStore.get('globals') || {};
+  if ($rootScope.globals.currentUser) {
+    $http.defaults.headers.common['Authorization'] = 'aa'; // jshint ignore:line
+  }
+
+  //$rootScope.$on('$locationChangeStart', function (event, next, current) {
+  $rootScope.$on('$locationChangeStart', function (event, next, current) { // jshint ignore:line
+    // redirect to login page if not logged in and trying to access a restricted page
+    var restrictedPage = $.inArray($location.path(), ['/login']) === -1;
+    var loggedIn = $rootScope.globals.currentUser;
+    if (restrictedPage && !loggedIn) {
+      $location.path('/login');
+    }
+  });
+}
+
+myApp.run(run);
 
 
