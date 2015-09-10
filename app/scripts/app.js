@@ -51,6 +51,7 @@ function config($routeProvider) {
 myApp.config(config);
 
 myApp.constant('config', {
+  admin : "admin",
   userUrl :':8080/user/',
   urlHTTP:'http://',
   validLoginUul : ':8080/loginValid/'

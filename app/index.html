@@ -52,19 +52,23 @@
 <div class="container-fluid" >
   <div class="row">
     <div class="col-sm-3 col-md-2 sidebar"  ng-cloak ng-controller="MenuCtrl" >
-      <ul class="nav nav-sidebar"  ng-show="visible">
+      <ul class="nav nav-sidebar"  ng-show="menuVisible">
         <li ng-class="{ active: isActive('/browse')}"><a href="#/browse">人员浏览及维护</a></li>
       </ul>
 
-      <ul class="nav nav-sidebar" ng-show="visible">
+      <ul class="nav nav-sidebar" ng-show="menuVisible">
         <li ng-class="{ active: isActive('/match')}"><a href="#/match">人员查询</a></li>
       </ul>
 
-      <ul class="nav nav-sidebar" ng-show="visible">
+      <ul class="nav nav-sidebar" ng-show="userMenuVisible">
         <li ng-class="{ active: isActive('/user')}"><a href="#/user">用户管理</a></li>
       </ul>
 
-      <ul class="nav nav-sidebar" ng-show="visible">
+      <ul class="nav nav-sidebar" ng-show="menuVisible">
+        <li ng-class="{ active: isActive('/user')}"><a href="#/user">修改密码</a></li>
+      </ul>
+
+      <ul class="nav nav-sidebar" ng-show="menuVisible">
         <li><a  ng-click="logout();" href="">退出登录</a></li>
       </ul>
 
