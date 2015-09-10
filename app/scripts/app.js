@@ -61,7 +61,7 @@ function run($rootScope, $location, $cookieStore, $http) {
   //console.log("app run"+$rootScope.globals);
   $rootScope.globals = $cookieStore.get('globals') || {};
   if ($rootScope.globals.currentUser) {
-    $http.defaults.headers.common['Authorization'] =  $rootScope.globals.currentUser.userName+ $rootScope.globals.currentUser.password; // jshint ignore:line
+    $http.defaults.headers.common['Authorization'] =  $rootScope.globals.currentUser.userName+","+ $rootScope.globals.currentUser.password; // jshint ignore:line
   }
 
   //$rootScope.$on('$locationChangeStart', function (event, next, current) {

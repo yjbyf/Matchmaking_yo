@@ -39,7 +39,7 @@
             password: password
           }
         };
-        $http.defaults.headers.common['Authorization'] =  $rootScope.globals.currentUser.userName+ $rootScope.globals.currentUser.password; // jshint ignore:line
+        $http.defaults.headers.common['Authorization'] =  $rootScope.globals.currentUser.userName+","+ $rootScope.globals.currentUser.password; // jshint ignore:line
         $cookieStore.put('globals', $rootScope.globals);
 
 
