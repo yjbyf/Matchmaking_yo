@@ -1,9 +1,14 @@
 <div class="col-sm-2 col-sm-offset-3 col-md-3 col-md-offset-2 main">
 
+
+  <div ng-class="{ 'alert': flash, 'alert-success': flash.type === 'success', 'alert-danger': flash.type === 'error' }" ng-if="flash" ng-bind="flash.message"></div>
+
+
+
   <form class="form-signin" name="form">
-    <h2 class="form-signin-heading">请登录</h2>
+    <h2 class="form-signin-heading">登录网站</h2>
     <label for="userName" class="sr-only">用户名</label>
-    <input type="text" id="userName" class="form-control" placeholder="用户名" required autofocus>
+    <input type="text" id="userName" class="form-control" placeholder="用户名"  ng-model="userName" required autofocus>
     <label for="password" class="sr-only">密码</label>
     <input type="password" id="password" class="form-control" placeholder="密码" ng-model="password" required>
     <!--

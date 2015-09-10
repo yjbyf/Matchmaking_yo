@@ -44,7 +44,7 @@ function config($routeProvider) {
       controllerAs: 'user'
     })
     .otherwise({
-      redirectTo: '/browse'
+      redirectTo: '/login'
     });
 }
 
@@ -52,15 +52,16 @@ myApp.config(config);
 
 myApp.constant('config', {
   userUrl :':8080/user/',
-  urlHTTP:'http://'
+  urlHTTP:'http://',
+  validLoginUul : ':8080/loginValid/'
 });
 
 function run($rootScope, $location, $cookieStore, $http) {
   // keep user logged in after page refresh
-  console.log("app run"+$rootScope.globals);
+  //console.log("app run"+$rootScope.globals);
   $rootScope.globals = $cookieStore.get('globals') || {};
   if ($rootScope.globals.currentUser) {
-    $http.defaults.headers.common['Authorization'] = 'aa'; // jshint ignore:line
+    $http.defaults.headers.common['Authorization'] =  $rootScope.globals.currentUser.userName+ $rootScope.globals.currentUser.password; // jshint ignore:line
   }
 
   //$rootScope.$on('$locationChangeStart', function (event, next, current) {

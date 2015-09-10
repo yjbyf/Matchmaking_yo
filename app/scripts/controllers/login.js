@@ -7,22 +7,30 @@
  * # MainCtrl
  * Controller of the angularApp
  */
-angular.module('angularApp')
-  .controller('LoginCtrl', function ($scope,$rootScope,$location,$cookieStore,$http) {
-    $scope.doLogin = function(valid){
-      if(!valid){
-        return false;
+
+function LoginCtrl($scope,$rootScope,$location,$cookieStore,$http, config,md5,AuthenticationService,FlashService ) {
+
+  $scope.webServiceLginUrl = config.urlHTTP + $location.host() + config.validLoginUul;
+  $scope.doLogin = function (valid) {
+    if (!valid) {
+      return false;
+    }
+
+    //TODO CALL THE REST TO VERIY THE LOGIN
+    var md5Password = md5.createHash($scope.password);
+    AuthenticationService.Login($scope.userName,md5Password,function(result){
+      if(result==="success"){
+        AuthenticationService.SetCredentials($scope.userName,md5Password);
+        $location.path("/browse");
+      }else{
+        FlashService.Error("登录失败");
       }
-      //TODO CALL THE REST TO VERIY THE LOGIN
-      $rootScope.authenticated=true;
-      $rootScope.globals = {
-        currentUser: {
-          username: "aaa",
-          authdata: "bbb"
-        }
-      };
-      $http.defaults.headers.common['Authorization'] = "aa"; // jshint ignore:line
-      $cookieStore.put('globals', $rootScope.globals);
-      $location.path("/browse");
-    };
-  });
+    });
+
+  };
+}
+  LoginCtrl.$inject = ['$scope', '$rootScope', '$location', '$cookieStore', '$http', 'config','md5', 'AuthenticationService', 'FlashService'];
+  angular.module('angularApp')
+    .controller('LoginCtrl', LoginCtrl);
+
+

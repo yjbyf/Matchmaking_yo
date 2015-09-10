@@ -30,7 +30,7 @@
         <td>
           <div class="controls">
             <button class="btn btn-primary" ng-click="modRecord('{{user}}');">修改密码</button>
-            <button class="btn btn-primary" ng-click="delRecord('{{user.id}}');">删除</button>
+            <button class="btn btn-primary" ng-show="user.userName!='admin'" ng-click="delRecord('{{user.id}}');">删除</button>
           </div>
         </td>
       </tr>

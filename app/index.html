@@ -48,16 +48,12 @@
     </div>
   </div>
 </nav>
-
+<!-----------------------------左侧菜单--------------------------------------------------->
 <div class="container-fluid" >
   <div class="row">
-    <div class="col-sm-3 col-md-2 sidebar" ng-controller="MenuCtrl" >
-      <ul class="nav nav-sidebar" ng-show="visible">
+    <div class="col-sm-3 col-md-2 sidebar"  ng-cloak ng-controller="MenuCtrl" >
+      <ul class="nav nav-sidebar"  ng-show="visible">
         <li ng-class="{ active: isActive('/browse')}"><a href="#/browse">人员浏览及维护</a></li>
-        <!--<li><a href="#">人员维护</a></li>
-        <li><a href="#">Analytics</a></li>
-        <li><a href="#">Export</a></li>
-        -->
       </ul>
 
       <ul class="nav nav-sidebar" ng-show="visible">
@@ -69,7 +65,7 @@
       </ul>
 
       <ul class="nav nav-sidebar" ng-show="visible">
-        <li ng-class="{ active: isActive('/login')}"><a href="#/">退出登录</a></li>
+        <li><a  ng-click="logout();" href="">退出登录</a></li>
       </ul>
 
       <!--
@@ -110,6 +106,8 @@
 <script src="scripts/controllers/browse.js"></script>
 <script src="scripts/controllers/match.js"></script>
 <script src="scripts/controllers/user.js"></script>
+<script src="scripts/services/authentication.service.js"></script>
+<script src="scripts/services/flash.service.js"></script>
 <!-- endbuild -->
 </body>
 </html>

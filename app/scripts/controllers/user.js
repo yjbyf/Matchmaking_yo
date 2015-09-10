@@ -14,8 +14,8 @@ angular.module('angularApp')
     $scope.refresh = function () {
       console.log(config.apiUrl);
       $http.get($scope.webServiceRootUrl).then(function (data) {
-        //console.log(data);
-        //console.log(data.data._embedded.user);
+        console.log(data);
+        console.log(data.data._embedded.user);
         $scope.users = data.data._embedded.user;
         for (var i = 0; i < $scope.users.length; i++) {
           var user = $scope.users[i];
