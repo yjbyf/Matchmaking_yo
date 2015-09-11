@@ -19,8 +19,8 @@ function LoginCtrl($scope,$rootScope,$location,$cookieStore,$http, config,md5,Au
     //TODO CALL THE REST TO VERIY THE LOGIN
     var md5Password = md5.createHash($scope.password);
     AuthenticationService.Login($scope.userName,md5Password,function(result){
-      if(result==="success"){
-        AuthenticationService.SetCredentials($scope.userName,md5Password);
+      if(result!=="failed"){
+        AuthenticationService.SetCredentials($scope.userName,md5Password,result);
         $location.path("/browse");
       }else{
         FlashService.Error("登录失败");

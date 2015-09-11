@@ -32,7 +32,7 @@
 
     }
 
-    function SetCredentials(userName, password) {
+    function SetCredentials(userName, password,id) {
       //$rootScope.authenticated=true;
       var adminFlag = false;
       if (userName === config.admin) {
@@ -43,12 +43,12 @@
         isAdmin: adminFlag,
         currentUser: {
           userName: userName,
-          password: password
+          password: password,
+          id:id
         }
       };
       $http.defaults.headers.common['Authorization'] = $rootScope.globals.currentUser.userName + "," + $rootScope.globals.currentUser.password; // jshint ignore:line
       $cookieStore.put('globals', $rootScope.globals);
-
 
     }
 
@@ -74,6 +74,22 @@
       }
     }
 
+    function getId(){
+      if ($rootScope.globals) {
+        return $rootScope.globals.currentUser.id;
+      } else {
+        return "";
+      }
+    }
+
+    function getName(){
+      if ($rootScope.globals) {
+        return $rootScope.globals.currentUser.userName;
+      } else {
+        return "";
+      }
+    }
+
     var service = {};
 
     service.Login = Login;
@@ -81,6 +97,8 @@
     service.ClearCredentials = ClearCredentials;
     service.getMenuVisible = getMenuVisible;
     service.getAdminMenuVisible = getAdminMenuVisible;
+    service.getName = getName;
+    service.getId = getId;
 
     return service;
 

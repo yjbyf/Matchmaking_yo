@@ -1,5 +1,7 @@
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 
+
+
   <form action="" class="form-horizontal" role="form" name="searchForm">
     <fieldset>
       <div class="form-group">
@@ -46,6 +48,7 @@
   <div class="modal fade" id="userModal" tabindex="-1" role="dialog"
        aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
+      <div ng-class="{ 'alert': flash, 'alert-success': flash.type === 'success', 'alert-danger': flash.type === 'error' }" ng-if="flash" ng-bind="flash.message"></div>
       <form action="" class="form-horizontal" role="form" name="form" novalidate>
       <div class="modal-content">
         <div class="modal-header">

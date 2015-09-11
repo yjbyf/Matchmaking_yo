@@ -28,6 +28,11 @@ function config($routeProvider) {
       controller: 'LoginCtrl',
       controllerAs: 'login'
     })
+    .when('/changePassword', {
+      templateUrl: 'views/changePassword.html',
+      controller: 'changePasswordCtrl',
+      controllerAs: 'changePassword'
+    })
     .when('/browse', {
       templateUrl: 'views/browse.html',
       controller: 'BrowseCtrl',
@@ -53,6 +58,7 @@ myApp.config(config);
 myApp.constant('config', {
   admin : "admin",
   userUrl :':8080/user/',
+  restPort:':8080/',
   urlHTTP:'http://',
   validLoginUul : ':8080/loginValid/'
 });

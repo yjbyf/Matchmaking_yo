@@ -65,7 +65,7 @@
       </ul>
 
       <ul class="nav nav-sidebar" ng-show="menuVisible">
-        <li ng-class="{ active: isActive('/user')}"><a href="#/user">修改密码</a></li>
+        <li ng-class="{ active: isActive('/changePassword')}"><a href="#/changePassword">修改密码</a></li>
       </ul>
 
       <ul class="nav nav-sidebar" ng-show="menuVisible">
@@ -106,11 +106,13 @@
 <!-- build:js({.tmp,app}) scripts/scripts.js -->
 <script src="scripts/app.js"></script>
 <script src="scripts/controllers/login.js"></script>
+<script src="scripts/controllers/changePassword.js"></script>
 <script src="scripts/controllers/menu.js"></script>
 <script src="scripts/controllers/browse.js"></script>
 <script src="scripts/controllers/match.js"></script>
 <script src="scripts/controllers/user.js"></script>
 <script src="scripts/services/authentication.service.js"></script>
+<script src="scripts/services/user.service.js"></script>
 <script src="scripts/services/flash.service.js"></script>
 <!-- endbuild -->
 </body>

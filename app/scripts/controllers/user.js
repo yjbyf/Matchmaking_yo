@@ -9,7 +9,7 @@
  * Controller of the angularApp
  */
 angular.module('angularApp')
-  .controller('UserCtrl', ['$scope', '$http', '$location', 'config', 'md5',function ($scope, $http, $location, config , md5) {
+  .controller('UserCtrl', ['$scope', '$http', '$location', 'config', 'md5','UserService','FlashService',function ($scope, $http, $location, config , md5,UserService,FlashService) {
 
     $scope.refresh = function () {
       console.log(config.apiUrl);
@@ -33,24 +33,12 @@ angular.module('angularApp')
 
     $scope.refresh();
 
-
-    /*
-     $scope.users = [
-     {
-     'id': '1',
-     'userName': '陈老师'
-     },
-     {
-     'id': '2',
-     'userName': '白老师'
-     }
-     ];*/
-
     $scope.newRecord = function () {
       $scope.selectedUserId = null;
       $scope.selectedUser = null;
       $scope.userNameReadonly = '';
       $scope.btnSaveClicked = false;
+      FlashService.clearFlashMessage();
       $('#userModal').modal();
     };
 
@@ -68,6 +56,7 @@ angular.module('angularApp')
 
       $scope.selectedUser = myObject;
       $scope.selectedUser.password = "";
+      FlashService.clearFlashMessage();
       $('#userModal').modal();
     };
 
@@ -108,34 +97,48 @@ angular.module('angularApp')
       if(!formValid) {
         return false;
       }
-      console.log($scope.selectedUser.userName);
-      console.log($scope.selectedUser.password);
-      console.log($scope.selectedUser.id);
+      //console.log($scope.selectedUser.userName);
+      //console.log($scope.selectedUser.password);
+      //console.log($scope.selectedUser.id);
+
       if ($scope.selectedUser.id === undefined) {
-        $http({
-          url: $scope.webServiceRootUrl,
-          method: "POST",
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          data: {
-            'userName': $scope.selectedUser.userName,
-            'password': md5.createHash($scope.selectedUser.password)
+        //新增
+        UserService.getCount($scope.selectedUser.userName,function(result){
+          if(result>0){
+            FlashService.Error("已有此用户名"+$scope.selectedUser.userName);
+            return false;
+          }else{
+            $http({
+              url: $scope.webServiceRootUrl,
+              method: "POST",
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              data: {
+                'userName': $scope.selectedUser.userName,
+                'password': md5.createHash($scope.selectedUser.password)
+              }
+            }).
+              then(function (response) {
+                console.log("done add" + response);
+                $('#userModal').modal('toggle');
+                //refresh grid
+                $scope.refresh();
+                // this callback will be called asynchronously
+                // when the response is available
+              }, function (response) {
+                console.log("add error" + response);
+                // called asynchronously if an error occurs
+                // or server returns response with an error status.
+              });
           }
-        }).
-          then(function (response) {
-            console.log("done add" + response);
-            $('#userModal').modal('toggle');
-            //refresh grid
-            $scope.refresh();
-            // this callback will be called asynchronously
-            // when the response is available
-          }, function (response) {
-            console.log("add error" + response);
-            // called asynchronously if an error occurs
-            // or server returns response with an error status.
-          });
+        });
+
       } else {
+        UserService.setPasswordByAdmin($scope.selectedUser.id,$scope.selectedUser.password, function(){
+          $('#userModal').modal('toggle');
+        });
+        /*
         $http.patch(
           $scope.webServiceRootUrl + $scope.selectedUser.id,
           {
@@ -144,7 +147,7 @@ angular.module('angularApp')
           }
         ).then(function (response) {
             console.log("done mod" + response);
-            $('#userModal').modal('toggle');
+
             //refresh grid
             $scope.refresh();
             // this callback will be called asynchronously
@@ -153,7 +156,7 @@ angular.module('angularApp')
             console.log("mod error" + response);
             // called asynchronously if an error occurs
             // or server returns response with an error status.
-          });
+          });*/
       }
 
 
