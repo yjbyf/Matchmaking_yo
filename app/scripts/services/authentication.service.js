@@ -2,8 +2,8 @@
   'use strict';
 
 
-  function AuthenticationService($location, $http, $cookieStore, $rootScope, $timeout, config) {
-    var webServiceLginUrl = config.urlHTTP + $location.host() + config.validLoginUul;
+  function AuthenticationService($location, $http, $cookieStore, $rootScope, $timeout, config,HostService) {
+    var webServiceLginUrl = config.urlHTTP + HostService.getHost() + config.validLoginUul;
 
     function Login(userName, password, callback) {
 
@@ -208,7 +208,7 @@
      }*/
   }
 
-  AuthenticationService.$inject = ['$location', '$http', '$cookieStore', '$rootScope', '$timeout', 'config'];
+  AuthenticationService.$inject = ['$location', '$http', '$cookieStore', '$rootScope', '$timeout', 'config','HostService'];
 
   angular
     .module('angularApp')

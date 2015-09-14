@@ -8,9 +8,9 @@
  * Controller of the angularApp
  */
 
-function LoginCtrl($scope,$rootScope,$location,$cookieStore,$http, config,md5,AuthenticationService,FlashService ) {
+function LoginCtrl($scope,$rootScope,$location,$cookieStore,$http, config,md5,AuthenticationService,FlashService,HostService ) {
 
-  $scope.webServiceLginUrl = config.urlHTTP + $location.host() + config.validLoginUul;
+  $scope.webServiceLginUrl = config.urlHTTP + HostService.getHost() + config.validLoginUul;
   $scope.doLogin = function (valid) {
     if (!valid) {
       return false;
@@ -29,7 +29,7 @@ function LoginCtrl($scope,$rootScope,$location,$cookieStore,$http, config,md5,Au
 
   };
 }
-  LoginCtrl.$inject = ['$scope', '$rootScope', '$location', '$cookieStore', '$http', 'config','md5', 'AuthenticationService', 'FlashService'];
+  LoginCtrl.$inject = ['$scope', '$rootScope', '$location', '$cookieStore', '$http', 'config','md5', 'AuthenticationService', 'FlashService','HostService'];
   angular.module('angularApp')
     .controller('LoginCtrl', LoginCtrl);
 

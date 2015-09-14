@@ -9,9 +9,9 @@
  */
 
 
-function changePasswordCtrl($scope, $rootScope, $location, $cookieStore, $http, config, md5, AuthenticationService, FlashService,UserService) {
+function changePasswordCtrl($scope, $rootScope, $location, $cookieStore, $http, config, md5, AuthenticationService, FlashService,UserService,HostService) {
 
-  $scope.webServiceLginUrl = config.urlHTTP + $location.host() + config.validLoginUul;
+  $scope.webServiceLginUrl = config.urlHTTP + HostService.getHost() + config.validLoginUul;
   $scope.doChange = function (valid) {
     if (!valid) {
       return false;
@@ -33,7 +33,7 @@ function changePasswordCtrl($scope, $rootScope, $location, $cookieStore, $http, 
   };
 }
 
-changePasswordCtrl.$inject = ['$scope', '$rootScope', '$location', '$cookieStore', '$http', 'config', 'md5', 'AuthenticationService', 'FlashService','UserService'];
+changePasswordCtrl.$inject = ['$scope', '$rootScope', '$location', '$cookieStore', '$http', 'config', 'md5', 'AuthenticationService', 'FlashService','UserService','HostService'];
 
 angular.module('angularApp')
   .controller('changePasswordCtrl', changePasswordCtrl);

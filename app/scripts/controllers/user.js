@@ -9,7 +9,8 @@
  * Controller of the angularApp
  */
 angular.module('angularApp')
-  .controller('UserCtrl', ['$scope', '$http', '$location', 'config', 'md5','UserService','FlashService',function ($scope, $http, $location, config , md5,UserService,FlashService) {
+  .controller('UserCtrl', ['$scope', '$http', '$location', 'config', 'md5','UserService','FlashService','HostService',
+    function ($scope, $http, $location, config , md5,UserService,FlashService,HostService) {
 
     $scope.refresh = function () {
       console.log(config.apiUrl);
@@ -27,7 +28,7 @@ angular.module('angularApp')
 
       });
     };
-    $scope.webServiceRootUrl = config.urlHTTP + $location.host() + config.userUrl;//":8080/user/";
+    $scope.webServiceRootUrl = config.urlHTTP + HostService.getHost() + config.userUrl;//":8080/user/";
 
     //$scope.webServicesSearchUrl = $scope.webServiceRootUrl  +  "/search/findByUserName";
 

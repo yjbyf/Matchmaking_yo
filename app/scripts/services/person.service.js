@@ -2,8 +2,8 @@
   'use strict';
 
 
-  function PersonService($location, $http, $cookieStore, $rootScope, $timeout, config) {
-    var webServiceRootUrl = config.urlHTTP + $location.host() + config.restPort + "person/";
+  function PersonService($location, $http, $cookieStore, $rootScope, $timeout, config,HostService) {
+    var webServiceRootUrl = config.urlHTTP + HostService.getHost() + config.restPort + "person/";
 
     function getPersonList(callback) {
       /* Dummy authentication for testing, uses $timeout to simulate api call
@@ -87,7 +87,7 @@
     return service;
   }
 
-  PersonService.$inject = ['$location', '$http', '$cookieStore', '$rootScope', '$timeout', 'config'];
+  PersonService.$inject = ['$location', '$http', '$cookieStore', '$rootScope', '$timeout', 'config','HostService'];
 
   angular
     .module('angularApp')

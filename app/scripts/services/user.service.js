@@ -2,11 +2,11 @@
   'use strict';
 
 
-  function UserService($location, $http, $cookieStore, $rootScope, $timeout, config,md5) {
-    var webServiceRootUrl = config.urlHTTP + $location.host() + config.userUrl;
+  function UserService($location, $http, $cookieStore, $rootScope, $timeout, config,md5,HostService) {
+    var webServiceRootUrl = config.urlHTTP + HostService.getHost() + config.userUrl;
     var webservideSearchUrl = webServiceRootUrl + "count";
     var webservidePatchUrl = webServiceRootUrl;
-    var webservidePatchSelfUrl = config.urlHTTP + $location.host() +config.restPort + "change_own_password";
+    var webservidePatchSelfUrl = config.urlHTTP + HostService.getHost() +config.restPort + "change_own_password";
 
       function getCount(userName, callback) {
       /* Dummy authentication for testing, uses $timeout to simulate api call
@@ -76,7 +76,7 @@
 
   }
 
-  UserService.$inject = ['$location', '$http', '$cookieStore', '$rootScope', '$timeout', 'config','md5'];
+  UserService.$inject = ['$location', '$http', '$cookieStore', '$rootScope', '$timeout', 'config','md5','HostService'];
 
   angular
     .module('angularApp')
