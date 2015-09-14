@@ -141,7 +141,7 @@
                 <label for="height" class="col-md-2 control-label">身高(cm)</label>
 
                 <div class="input-group date eventTitle col-md-6">
-                  <input class="form-control" size="16" type="text" ng-model="selectedPerson.height" id="height" name="height"
+                  <input class="form-control" size="16" type="number" ng-model="selectedPerson.height" id="height" name="height"
                          required/>
                   <div class="alert alert-danger" ng-show="btnSaveClicked && form.height.$error.required">请输入身高</div>
                 </div>
@@ -191,7 +191,7 @@
                 <label for="salary" class="col-md-2 control-label">年薪(万)</label>
 
                 <div class="input-group date eventTitle col-md-6">
-                  <input class="form-control" size="16" type="text" ng-model="selectedPerson.salary" id="salary" name="salary"
+                  <input class="form-control" size="16" type="number" ng-model="selectedPerson.salary" id="salary" name="salary"
                          required/>
                   <div class="alert alert-danger" ng-show="btnSaveClicked && form.salary.$error.required">请输入年薪</div>
                 </div>
