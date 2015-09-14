@@ -1,0 +1,261 @@
+<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+
+  <form action="" class="form-horizontal" role="form" name="searchForm">
+    <fieldset>
+      <div class="form-group">
+        <label for="name" class="col-md-2 control-label">查询</label>
+
+        <div class="input-group date eventTitle col-md-6">
+          <input class="form-control" size="16" type="text" ng-model="query" id="query" required/>
+        </div>
+      </div>
+    </fieldset>
+  </form>
+
+  <div class="table-responsive">
+    <table class="table table-striped table-hover">
+      <thead>
+      <tr>
+        <th>&nbsp;</th>
+        <!--
+        <th>编号</th>
+        <th>注册日期</th>
+        <th>收费</th>
+        -->
+        <th>姓名</th>
+        <th>出生年月</th>
+        <th>身高</th>
+        <th>学历</th>
+        <th>户籍</th>
+        <th>工作单位</th>
+        <th>年薪(万)</th>
+        <th>家庭情况</th>
+        <th>住房</th>
+        <th>联系电话</th>
+        <th>择偶要求</th>
+        <th>&nbsp;</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr ng-repeat="person in persons  | filter:query | filter:{aliveFlag:'1'}">
+        <td><input type="checkbox" value="{{person}}" ng-click="toggleSelection(person)"></td>
+        <!--<td>{{person.id}}</td>
+        <td>{{person.registerDate}}</td>
+        <td>{{person.fee}}</td>
+        -->
+        <td>{{person.name}}</td>
+        <td>{{person.birthDate}}</td>
+        <td>{{person.height}}</td>
+        <td>{{person.education}}</td>
+        <td>{{person.census}}</td>
+        <td>{{person.company}}</td>
+        <td>{{person.salary}}</td>
+        <td>{{person.family}}</td>
+        <td>{{person.house}}</td>
+        <td>{{person.phone}}</td>
+        <td>{{person.requirement}}</td>
+        <td>
+          <div class="controls">
+            <button class="btn btn-primary" ng-click="modRecord('{{person}}');">修改</button>
+          </div>
+        </td>
+      </tr>
+
+      </tbody>
+    </table>
+    <div class="controls">
+      <button class="btn btn-primary" ng-click="newRecord();">新增</button>
+      <button class="btn btn-primary" ng-click="doDelete()">删除</button>
+    </div>
+  </div>
+  <!--弹出编辑录入界面-->
+  <div class="modal fade" id="personModal" tabindex="-1" role="dialog"
+       aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal"
+                  aria-hidden="true">×
+          </button>
+          <h3 id="myModalLabel">
+            <div ng-if="selectedPerson.id!=null">编辑人员</div>
+            <div ng-if="selectedPerson.id==null">新增人员</div>
+          </h3>
+        </div>
+        <form action="" class="form-horizontal" role="form" name="form">
+          <div class="modal-body">
+
+            <input id="id" type="hidden" ng-model="selectedPerson.id"/>
+            <input id="aliveFlag" type="hidden" ng-model="selectedPerson.aliveFlag"/>
+            <fieldset>
+              <div class="form-group">
+                <label for="name" class="col-md-2 control-label">姓名</label>
+
+                <div class="input-group date eventTitle col-md-6">
+                  <input class="form-control" size="16" type="text" ng-model="selectedPerson.name" id="name" name="name" required/>
+                  <div class="alert alert-danger" ng-show="btnSaveClicked && form.name.$error.required">请输入姓名</div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="gender" class="col-md-2 control-label">性别</label>
+
+                <div class="input-group date eventTitle col-md-6">
+                  <select id="gender" name="gender" class="form-control" ng-model="selectedPerson.gender" required>
+                    <option value="男">男</option>
+                    <option value="女">女</option>
+                  </select>
+
+                  <div class="alert alert-danger" ng-show="btnSaveClicked && form.gender.$error.required">请选择性别</div>
+                </div>
+
+              </div>
+
+              <div class="form-group">
+                <label for="dtp_start" class="col-md-2 control-label">出生日期</label>
+
+                <div class="input-group date eventStart col-md-6" data-date="" data-link-field="dtp_start"
+                     id="dtp_start">
+                  <div class="dropdown">
+                    <a class="dropdown-toggle" id="birthDate" role="button" data-toggle="dropdown" data-target="#"
+                       href="">
+                      <div class="input-group">
+                        <input type="text" name="birthDate" class="form-control"
+                               data-ng-model="selectedPerson.birthDate" readonly
+                               required/>
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                      </div>
+                    </a>
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                      <datetimepicker data-ng-model="selectedPerson.birthDate"
+                                      data-datetimepicker-config="{ dropdownSelector: '#birthDate',startView:'year',minView:'month' }"
+                                      data-on-set-time="onTimeSet(newDate)"/>
+                    </ul>
+                  </div>
+                  <div class="alert alert-danger" ng-show="btnSaveClicked && form.birthDate.$error.required">请选择出生日期
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="height" class="col-md-2 control-label">身高(cm)</label>
+
+                <div class="input-group date eventTitle col-md-6">
+                  <input class="form-control" size="16" type="text" ng-model="selectedPerson.height" id="height" name="height"
+                         required/>
+                  <div class="alert alert-danger" ng-show="btnSaveClicked && form.height.$error.required">请输入身高</div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="education" class="col-md-2 control-label">学历</label>
+
+                <div class="input-group date eventTitle col-md-6">
+                  <select id="education" name="education" class="form-control" ng-model="selectedPerson.education"
+                          required>
+                    <option value="小学">小学</option>
+                    <option value="中学">中学</option>
+                    <option value="高中">高中</option>
+                    <option value="大专">大专</option>
+                    <option value="大本">大本</option>
+                    <option value="硕士">硕士</option>
+                    <option value="博士">博士</option>
+                  </select>
+
+                  <div class="alert alert-danger" ng-show="btnSaveClicked && form.education.$error.required">请选择学历</div>
+                </div>
+
+              </div>
+
+              <div class="form-group">
+                <label for="height" class="col-md-2 control-label">户籍</label>
+
+                <div class="input-group date eventTitle col-md-6">
+                  <input class="form-control" size="16" type="text" ng-model="selectedPerson.census" id="census" name="census"
+                         required/>
+                  <div class="alert alert-danger" ng-show="btnSaveClicked && form.census.$error.required">请输入户籍</div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="company" class="col-md-2 control-label"> 工作单位</label>
+
+                <div class="input-group date eventTitle col-md-6">
+                  <input class="form-control" size="16" type="text" ng-model="selectedPerson.company" id="company" name="company"
+                         required/>
+                  <div class="alert alert-danger" ng-show="btnSaveClicked && form.company.$error.required">请输入工作单位</div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="salary" class="col-md-2 control-label">年薪(万)</label>
+
+                <div class="input-group date eventTitle col-md-6">
+                  <input class="form-control" size="16" type="text" ng-model="selectedPerson.salary" id="salary" name="salary"
+                         required/>
+                  <div class="alert alert-danger" ng-show="btnSaveClicked && form.salary.$error.required">请输入年薪</div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="family" class="col-md-2 control-label">家庭情况</label>
+
+                <div class="input-group date eventTitle col-md-6">
+                  <input class="form-control" size="16" type="text" ng-model="selectedPerson.family" id="family" name="family"
+                         required/>
+                  <div class="alert alert-danger" ng-show="btnSaveClicked && form.family.$error.required">请输入家庭情况</div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="house" class="col-md-2 control-label">住房</label>
+
+                <div class="input-group date eventTitle col-md-6">
+                  <input class="form-control" size="16" type="text" ng-model="selectedPerson.house" id="house" name="house"
+                         required/>
+                  <div class="alert alert-danger" ng-show="btnSaveClicked && form.house.$error.required">请输入住房</div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="phone" class="col-md-2 control-label">电话</label>
+
+                <div class="input-group date eventTitle col-md-6">
+                  <input class="form-control" size="16" type="text" ng-model="selectedPerson.phone" id="phone" name="phone"
+                         required/>
+                  <div class="alert alert-danger" ng-show="btnSaveClicked && form.phone.$error.required">请输入电话</div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="requirement" class="col-md-2 control-label">择偶要求</label>
+                <div class="input-group date eventTitle col-md-6">
+                  <input class="form-control" size="16" type="text" ng-model="selectedPerson.requirement" id="requirement" name="requirement"
+                         required/>
+                  <div class="alert alert-danger" ng-show="btnSaveClicked && form.requirement.$error.required">请输入择偶要求</div>
+                </div>
+              </div>
+
+            </fieldset>
+
+
+          </div>
+          <div class="modal-footer">
+            <!--data-dismiss="modal"-->
+            <button type="button" class="btn btn-primary" ng-click="doSave(form.$valid);"
+                    ng-disabled="btnSaveClicked  && form.$invalid">保存
+            </button>
+
+          </div>
+
+        </form>
+
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
+  <!-- /.modal -->
+
+
+</div>

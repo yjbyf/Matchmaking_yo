@@ -16,7 +16,8 @@ var myApp = angular
     'ngRoute',
     'ngSanitize',
     'ngTouch',
-    'angular-md5'
+    'angular-md5',
+    'ui.bootstrap.datetimepicker'
   ]);
 
 
@@ -34,9 +35,9 @@ function config($routeProvider) {
       controllerAs: 'changePassword'
     })
     .when('/browse', {
-      templateUrl: 'views/browse.html',
-      controller: 'BrowseCtrl',
-      controllerAs: 'browse'
+      templateUrl: 'views/person.html',
+      controller: 'PersonCtrl',
+      controllerAs: 'person'
     })
     .when('/match', {
       templateUrl: 'views/match.html',

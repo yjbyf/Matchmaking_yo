@@ -13,6 +13,7 @@
   <!-- build:css(.tmp) styles/main.css -->
   <link rel="stylesheet" href="styles/main.css">
   <link rel="stylesheet" href="styles/dashboard.css">
+  <link rel="stylesheet" href="bower_components/angular-bootstrap-datetimepicker/src/css/datetimepicker.css"/>
   <!-- endbuild -->
 </head>
 <body ng-app="angularApp">
@@ -53,7 +54,7 @@
   <div class="row">
     <div class="col-sm-3 col-md-2 sidebar"  ng-cloak ng-controller="MenuCtrl" >
       <ul class="nav nav-sidebar"  ng-show="menuVisible">
-        <li ng-class="{ active: isActive('/browse')}"><a href="#/browse">人员浏览及维护</a></li>
+        <li ng-class="{ active: isActive('/browse')}"><a href="#/browse">人员管理</a></li>
       </ul>
 
       <ul class="nav nav-sidebar" ng-show="menuVisible">
@@ -103,16 +104,23 @@
 <!-- endbower -->
 <!-- endbuild -->
 
+<!--datetimepicker start-->
+<script src="bower_components/moment/moment.js"></script>
+<script src="bower_components/moment/locale/zh-cn.js"></script>
+<script src="bower_components/angular-bootstrap-datetimepicker/src/js/datetimepicker.js"></script>
+<script src="bower_components/angular-i18n/angular-locale_zh-cn.js"></script>
+<!--datetimepicker end-->
 <!-- build:js({.tmp,app}) scripts/scripts.js -->
 <script src="scripts/app.js"></script>
 <script src="scripts/controllers/login.js"></script>
 <script src="scripts/controllers/changePassword.js"></script>
 <script src="scripts/controllers/menu.js"></script>
-<script src="scripts/controllers/browse.js"></script>
+<script src="scripts/controllers/person.js"></script>
 <script src="scripts/controllers/match.js"></script>
 <script src="scripts/controllers/user.js"></script>
 <script src="scripts/services/authentication.service.js"></script>
 <script src="scripts/services/user.service.js"></script>
+<script src="scripts/services/person.service.js"></script>
 <script src="scripts/services/flash.service.js"></script>
 <!-- endbuild -->
 </body>
