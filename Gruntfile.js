@@ -408,7 +408,38 @@ module.exports = function (grunt) {
           cwd: '.',
           src: 'bower_components/bootstrap-sass-official/assets/fonts/bootstrap/*',
           dest: '<%= yeoman.dist %>'
-        }]
+        },
+          {
+            expand: true,
+            cwd: '.',
+            src: 'bower_components/angular-bootstrap-datetimepicker/src/css/datetimepicker.css',
+            dest: '<%= yeoman.dist %>'
+          }/*,
+
+          {
+            expand: true,
+            cwd: '.',
+            src: 'bower_components/moment/moment.js',
+            dest: '<%= yeoman.dist %>'
+          },
+          {
+            expand: true,
+            cwd: '.',
+            src: 'bower_components/moment/locale/zh-cn.js',
+            dest: '<%= yeoman.dist %>'
+          },
+          {
+            expand: true,
+            cwd: '.',
+            src: 'bower_components/angular-bootstrap-datetimepicker/src/js/datetimepicker.js',
+            dest: '<%= yeoman.dist %>'
+          },
+          {
+            expand: true,
+            cwd: '.',
+            src: 'bower_components/angular-i18n/angular-locale_zh-cn.js',
+            dest: '<%= yeoman.dist %>'
+          }*/]
       },
       styles: {
         expand: true,
