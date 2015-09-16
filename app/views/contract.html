@@ -1,0 +1,154 @@
+<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+
+  <form action="" class="form-horizontal" role="form" name="searchForm">
+    <fieldset>
+      <div class="form-group">
+        <label for="query" class="col-md-2 control-label">查询</label>
+        <div class="input-group date eventTitle col-md-6">
+          <input class="form-control" size="16" type="text" ng-model="query" id="query" required/>
+        </div>
+      </div>
+    </fieldset>
+  </form>
+
+  <!--
+  <h3>Select2 theme</h3>
+  <p>Selected: {{person.selected}}</p>
+  <ui-select ng-model="person.selected"  ng-disabled="disabled" style="min-width: 300px;">
+    <ui-select-match placeholder="Select a person in the list or search his name/age...">{{$select.selected.name}}</ui-select-match>
+    <ui-select-choices repeat="person in people | propsFilter: {name: $select.search, age: $select.search}">
+      <div ng-bind-html="person.name | highlight: $select.search"></div>
+      <small>
+        email: {{person.email}}
+        age: <span ng-bind-html="''+person.age | highlight: $select.search"></span>
+      </small>
+    </ui-select-choices>
+  </ui-select>
+   -->
+
+  <div class="table-responsive">
+    <table class="table table-striped table-hover">
+      <thead>
+      <tr>
+        <th>&nbsp;</th>
+        <!--
+        <th>编号</th>
+        <th>注册日期</th>
+        <th>收费</th>
+        -->
+        <th>姓名</th>
+        <th>性别</th>
+        <th>合同号</th>
+        <th>收费</th>
+        <th>服务次数</th>
+        <th>买单老师</th>
+        <th>发票号</th>
+        <th>合同开始日期</th>
+        <th>合同结束日期</th>
+        <th>&nbsp;</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr ng-repeat="contract in contracts  | filter:query | filter:{aliveFlag:'1'}">
+        <td><input type="checkbox" value="{{contract}}" ng-click="toggleSelection(contract)"></td>
+        <td>{{contract.name}}</td>
+        <td>{{contract.gender}}</td>
+        <td>{{contract.no}}</td>
+        <td>{{contract.fee}}</td>
+        <td>{{contract.serviceTimes}}</td>
+        <td>{{contract.checkerName}}</td>
+        <td>{{contract.vatNO}}</td>
+        <td>{{contract.startDate}}</td>
+        <td>{{contract.endDate}}</td>
+        <td>
+          <div class="controls">
+            <button class="btn btn-primary" ng-click="modRecord('{{contract}}');">修改</button>
+          </div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+    <div class="controls">
+      <button class="btn btn-primary" ng-click="newRecord();">新增</button>
+      <button class="btn btn-primary" ng-click="doDelete()">删除</button>
+    </div>
+  </div>
+  <!--弹出编辑录入界面-->
+  <div class="modal fade" id="contractModal" tabindex="-1" role="dialog"
+       aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal"
+                  aria-hidden="true">×
+          </button>
+          <h3 id="myModalLabel">
+            <div ng-if="selectedContract.id!=null">编辑合同</div>
+            <div ng-if="selectedContract.id==null">新增合同</div>
+          </h3>
+        </div>
+        <form action="" class="form-horizontal" role="form" name="form" id="form">
+          <div class="modal-body">
+
+            <input id="id" type="hidden" ng-model="selectedContract.id"/>
+            <input id="aliveFlag" type="hidden" ng-model="selectedContract.aliveFlag"/>
+            <fieldset>
+              <div class="form-group">
+                <label for="personInfo" class="col-md-2 control-label">姓名</label>
+
+                <div class="input-group date eventTitle col-md-6">
+                  <!-- <select class="selectpicker"  data-live-search="true" title='请选择人员' name="personId" id="personId" ng-model="selectedContract.personId" required>
+                   <option ng-repeat="person in persons" value="{{person.id}}">{{person.name}}({{person.gender}})</option>-->
+                  <ui-select ng-model="person.selected"  ng-disabled="disabled" name="personInfo" id="personInfo" required>
+                    <ui-select-match placeholder="请选择人员">{{$select.selected.name}}</ui-select-match>
+                    <ui-select-choices repeat="person in persons | propsFilter: {name: $select.search, gender: $select.search}">
+                      <div ng-bind-html="person.name | highlight: $select.search"></div>
+                      <small>
+                        性别: <span ng-bind-html="''+person.gender | highlight: $select.search"></span>
+                      </small>
+                    </ui-select-choices>
+                  </ui-select>
+                  <div class="alert alert-danger" ng-show="btnSaveClicked && form.personInfo.$error.required">请选择人员</div>
+
+
+
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="NO" class="col-md-2 control-label">合同号</label>
+
+                <div class="input-group date eventTitle col-md-6">
+                  <input class="form-control" size="16" type="text" ng-model="selectedContract.no" id="no"
+                         name="no"
+                         required/>
+
+                  <div class="alert alert-danger" ng-show="btnSaveClicked && form.no.$error.required">请输入合同号</div>
+                </div>
+              </div>
+
+            </fieldset>
+
+
+          </div>
+          <div class="modal-footer">
+            <!--data-dismiss="modal"-->
+            <button type="button" class="btn btn-primary" ng-click="doSave(form.$valid);"
+                    ng-disabled="btnSaveClicked  && form.$invalid">保存
+            </button>
+
+
+          </div>
+
+        </form>
+
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
+  <!-- /.modal -->
+
+</div>
+
+
