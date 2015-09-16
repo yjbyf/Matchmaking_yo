@@ -92,7 +92,9 @@
                 <label for="name" class="col-md-2 control-label">姓名</label>
 
                 <div class="input-group date eventTitle col-md-6">
-                  <input class="form-control" size="16" type="text" ng-model="selectedPerson.name" id="name" name="name" required/>
+                  <input class="form-control" size="16" type="text" ng-model="selectedPerson.name" id="name" name="name"
+                         required/>
+
                   <div class="alert alert-danger" ng-show="btnSaveClicked && form.name.$error.required">请输入姓名</div>
                 </div>
               </div>
@@ -141,8 +143,10 @@
                 <label for="height" class="col-md-2 control-label">身高(cm)</label>
 
                 <div class="input-group date eventTitle col-md-6">
-                  <input class="form-control" size="16" type="number" ng-model="selectedPerson.height" id="height" name="height"
+                  <input class="form-control" size="16" type="number" ng-model="selectedPerson.height" id="height"
+                         name="height"
                          required/>
+
                   <div class="alert alert-danger" ng-show="btnSaveClicked && form.height.$error.required">请输入身高</div>
                 </div>
               </div>
@@ -171,8 +175,10 @@
                 <label for="height" class="col-md-2 control-label">户籍</label>
 
                 <div class="input-group date eventTitle col-md-6">
-                  <input class="form-control" size="16" type="text" ng-model="selectedPerson.census" id="census" name="census"
+                  <input class="form-control" size="16" type="text" ng-model="selectedPerson.census" id="census"
+                         name="census"
                          required/>
+
                   <div class="alert alert-danger" ng-show="btnSaveClicked && form.census.$error.required">请输入户籍</div>
                 </div>
               </div>
@@ -181,8 +187,10 @@
                 <label for="company" class="col-md-2 control-label"> 工作单位</label>
 
                 <div class="input-group date eventTitle col-md-6">
-                  <input class="form-control" size="16" type="text" ng-model="selectedPerson.company" id="company" name="company"
+                  <input class="form-control" size="16" type="text" ng-model="selectedPerson.company" id="company"
+                         name="company"
                          required/>
+
                   <div class="alert alert-danger" ng-show="btnSaveClicked && form.company.$error.required">请输入工作单位</div>
                 </div>
               </div>
@@ -191,8 +199,10 @@
                 <label for="salary" class="col-md-2 control-label">年薪(万)</label>
 
                 <div class="input-group date eventTitle col-md-6">
-                  <input class="form-control" size="16" type="number" ng-model="selectedPerson.salary" id="salary" name="salary"
+                  <input class="form-control" size="16" type="number" ng-model="selectedPerson.salary" id="salary"
+                         name="salary"
                          required/>
+
                   <div class="alert alert-danger" ng-show="btnSaveClicked && form.salary.$error.required">请输入年薪</div>
                 </div>
               </div>
@@ -201,8 +211,10 @@
                 <label for="family" class="col-md-2 control-label">家庭情况</label>
 
                 <div class="input-group date eventTitle col-md-6">
-                  <input class="form-control" size="16" type="text" ng-model="selectedPerson.family" id="family" name="family"
+                  <input class="form-control" size="16" type="text" ng-model="selectedPerson.family" id="family"
+                         name="family"
                          required/>
+
                   <div class="alert alert-danger" ng-show="btnSaveClicked && form.family.$error.required">请输入家庭情况</div>
                 </div>
               </div>
@@ -211,8 +223,13 @@
                 <label for="house" class="col-md-2 control-label">住房</label>
 
                 <div class="input-group date eventTitle col-md-6">
-                  <input class="form-control" size="16" type="text" ng-model="selectedPerson.house" id="house" name="house"
-                         required/>
+                  <select id="house" name="house" class="form-control" ng-model="selectedPerson.house"
+                          required>
+                    <option value="独立婚房">独立婚房</option>
+                    <option value="父母同住">父母同住</option>
+                    <option value="无婚房">无婚房</option>
+                  </select>
+
                   <div class="alert alert-danger" ng-show="btnSaveClicked && form.house.$error.required">请输入住房</div>
                 </div>
               </div>
@@ -221,18 +238,24 @@
                 <label for="phone" class="col-md-2 control-label">电话</label>
 
                 <div class="input-group date eventTitle col-md-6">
-                  <input class="form-control" size="16" type="text" ng-model="selectedPerson.phone" id="phone" name="phone"
+                  <input class="form-control" size="16" type="text" ng-model="selectedPerson.phone" id="phone"
+                         name="phone"
                          required/>
+
                   <div class="alert alert-danger" ng-show="btnSaveClicked && form.phone.$error.required">请输入电话</div>
                 </div>
               </div>
 
               <div class="form-group">
                 <label for="requirement" class="col-md-2 control-label">择偶要求</label>
+
                 <div class="input-group date eventTitle col-md-6">
-                  <input class="form-control" size="16" type="text" ng-model="selectedPerson.requirement" id="requirement" name="requirement"
+                  <input class="form-control" size="16" type="text" ng-model="selectedPerson.requirement"
+                         id="requirement" name="requirement"
                          required/>
-                  <div class="alert alert-danger" ng-show="btnSaveClicked && form.requirement.$error.required">请输入择偶要求</div>
+
+                  <div class="alert alert-danger" ng-show="btnSaveClicked && form.requirement.$error.required">请输入择偶要求
+                  </div>
                 </div>
               </div>
 
