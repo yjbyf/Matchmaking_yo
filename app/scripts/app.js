@@ -49,8 +49,13 @@ function config($routeProvider) {
       controller: 'UserCtrl',
       controllerAs: 'user'
     })
+    .when('/employee', {
+      templateUrl: 'views/employee.html',
+      controller: 'EmployeeCtrl',
+      controllerAs: 'employee'
+    })
     .otherwise({
-      redirectTo: '/login'
+      redirectTo: '/browse'
     });
 }
 

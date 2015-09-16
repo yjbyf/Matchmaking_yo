@@ -3,7 +3,7 @@
 
 
   function HostService($location) {
-      var devFlag = false;
+      var devFlag = true;
       function getHost() {
         if (!devFlag){
           return "104.160.34.207";

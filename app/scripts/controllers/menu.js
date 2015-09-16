@@ -11,13 +11,13 @@
 function MenuCtrl ($rootScope, $scope, $location,AuthenticationService)
 {
   $scope.menuVisible = false;
-  $scope.userMenuVisible = false;
+  $scope.adminMenuVisible = false;
 
   $scope.isActive = function (viewLocation) {
     //console.log($location.path());
     //console.log("login or not:"+$rootScope.authenticated);
     $scope.menuVisible = AuthenticationService.getMenuVisible();
-    $scope.userMenuVisible = AuthenticationService.getAdminMenuVisible();
+    $scope.adminMenuVisible = AuthenticationService.getAdminMenuVisible();
     if (!$scope.menuVisible) {
       $location.path("/login");
     }
@@ -27,7 +27,7 @@ function MenuCtrl ($rootScope, $scope, $location,AuthenticationService)
   $scope.logout = function(){
     AuthenticationService.ClearCredentials();
     $scope.menuVisible = AuthenticationService.getMenuVisible();
-    $scope.userMenuVisible =  AuthenticationService.getAdminMenuVisible();
+    $scope.adminMenuVisible =  AuthenticationService.getAdminMenuVisible();
     $location.path("/login");
     //console.log("do logout");
   };
