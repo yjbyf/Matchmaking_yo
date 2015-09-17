@@ -132,8 +132,12 @@ function ContractCtrl($scope, ContractService,PersonService,$filter,UserService)
     }
   };
 
-  $scope.onTimeSet = function (newDate) {
-    $scope.selectedContract.startDate = $filter('date')(newDate, 'yyyy-MM');
+  $scope.onStartDateSet = function (newDate) {
+    $scope.selectedContract.startDate = $filter('date')(newDate, 'yyyy-MM-dd');
+  };
+
+  $scope.onEndDateSet = function (newDate) {
+    $scope.selectedContract.endDate = $filter('date')(newDate, 'yyyy-MM-dd');
   };
 }
 

@@ -101,7 +101,7 @@
                    <option ng-repeat="person in persons" value="{{person.id}}">{{person.name}}({{person.gender}})</option>-->
                   <ui-select ng-model="person.selected"  ng-disabled="disabled" name="personInfo" id="personInfo" required>
                     <ui-select-match placeholder="请选择人员">{{$select.selected.name}}</ui-select-match>
-                    <ui-select-choices repeat="person in persons | propsFilter: {name: $select.search, gender: $select.search}">
+                    <ui-select-choices repeat="person in persons | propsFilter: {name: $select.search, gender: $select.search}  | filter:{aliveFlag:'1'} ">
                       <div ng-bind-html="person.name | highlight: $select.search"></div>
                       <small>
                         性别: <span ng-bind-html="''+person.gender | highlight: $select.search"></span>
@@ -128,9 +128,6 @@
                     </ui-select-choices>
                   </ui-select>
                   <div class="alert alert-danger" ng-show="btnSaveClicked && form.checkerInfo.$error.required">请选择买单老师</div>
-
-
-
                 </div>
               </div>
 
@@ -143,6 +140,93 @@
                          required/>
 
                   <div class="alert alert-danger" ng-show="btnSaveClicked && form.no.$error.required">请输入合同号</div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="fee" class="col-md-2 control-label">收费</label>
+
+                <div class="input-group date eventTitle col-md-6">
+                  <input class="form-control" size="16" type="number" ng-model="selectedContract.fee" id="fee"
+                         name="fee"
+                         required/>
+                  <div class="alert alert-danger" ng-show="btnSaveClicked && form.fee.$error.required">请输入收费</div>
+                  <div class="alert alert-danger" ng-show="btnSaveClicked && form.fee.$error.number">请输入数字</div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="serviceTimes" class="col-md-2 control-label">服务次数</label>
+
+                <div class="input-group date eventTitle col-md-6">
+                  <input class="form-control" size="16" type="number" ng-model="selectedContract.serviceTimes" id="serviceTimes"
+                         name="serviceTimes"
+                         required/>
+                  <div class="alert alert-danger" ng-show="btnSaveClicked && form.serviceTimes.$error.required">请输入服务次数</div>
+                  <div class="alert alert-danger" ng-show="btnSaveClicked && form.serviceTimes.$error.number">请输入数字</div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="vatNO" class="col-md-2 control-label">发票号</label>
+
+                <div class="input-group date eventTitle col-md-6">
+                  <input class="form-control" size="16" type="text" ng-model="selectedContract.vatNO" id="vatNO"
+                         name="vatNO"
+                         required/>
+                  <div class="alert alert-danger" ng-show="btnSaveClicked && form.vatNO.$error.required">请输入发票号</div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="dtp_start" class="col-md-2 control-label">合同开始日期</label>
+
+                <div class="input-group date eventStart col-md-6" data-date="" data-link-field="dtp_start"
+                     id="dtp_start">
+                  <div class="dropdown">
+                    <a class="dropdown-toggle" id="startDate" role="button" data-toggle="dropdown" data-target="#"
+                       href="">
+                      <div class="input-group">
+                        <input type="text" name="startDate" class="form-control"
+                               data-ng-model="selectedContract.startDate" readonly
+                               required/>
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                      </div>
+                    </a>
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                      <datetimepicker data-ng-model="selectedContract.startDate"
+                                      data-datetimepicker-config="{ dropdownSelector: '#startDate',startView:'year',minView:'day' }"
+                                      data-on-set-time="onStartDateSet(newDate)"/>
+                    </ul>
+                  </div>
+                  <div class="alert alert-danger" ng-show="btnSaveClicked && form.startDate.$error.required">请选择合同开始日期
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="dtp_end" class="col-md-2 control-label">合同结束日期</label>
+
+                <div class="input-group date eventStart col-md-6" data-date="" data-link-field="dtp_end"
+                     id="dtp_end">
+                  <div class="dropdown">
+                    <a class="dropdown-toggle" id="endDate" role="button" data-toggle="dropdown" data-target="#"
+                       href="">
+                      <div class="input-group">
+                        <input type="text" name="endDate" class="form-control"
+                               data-ng-model="selectedContract.endDate" readonly
+                               required/>
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                      </div>
+                    </a>
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                      <datetimepicker data-ng-model="selectedContract.endDate"
+                                      data-datetimepicker-config="{ dropdownSelector: '#endDate',startView:'year',minView:'day' }"
+                                      data-on-set-time="onEndDateSet(newDate)"/>
+                    </ul>
+                  </div>
+                  <div class="alert alert-danger" ng-show="btnSaveClicked && form.endDate.$error.required">请选择合同结束日期
+                  </div>
                 </div>
               </div>
 
