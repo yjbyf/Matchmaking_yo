@@ -6,18 +6,9 @@
  * # ContractCtrl
  * Controller of the angularApp
  */
-function ContractCtrl($scope, ContractService,PersonService,$filter) {
+function ContractCtrl($scope, ContractService,PersonService,$filter,UserService) {
   $scope.person = {};
-  $scope.people = [
-    { name: 'Adam',      email: 'adam@email.com',      age: 10 },
-    { name: 'Amalie',    email: 'amalie@email.com',    age: 12 },
-    { name: 'Wladimir',  email: 'wladimir@email.com',  age: 30 },
-    { name: 'Samantha',  email: 'samantha@email.com',  age: 31 },
-    { name: 'Estefanía', email: 'estefanía@email.com', age: 16 },
-    { name: 'Natasha',   email: 'natasha@email.com',   age: 54 },
-    { name: 'Nicole',    email: 'nicole@email.com',    age: 43 },
-    { name: 'Adrian',    email: 'adrian@email.com',    age: 21 }
-  ];
+  $scope.checker = {};
   $scope.refresh = function () {
     ContractService.getContractList(function (data) {
       //console.log("contract get:"+data);
@@ -48,6 +39,9 @@ function ContractCtrl($scope, ContractService,PersonService,$filter) {
       //$scope.people = $scope.persons;
       //console.log("contract get:"+data);
     });
+    UserService.getUserListWithoutPriv(function(data){
+      $scope.checkers = data.data;
+    });
   };
   $(document).ready(function() {
 
@@ -60,6 +54,8 @@ function ContractCtrl($scope, ContractService,PersonService,$filter) {
   $scope.newRecord = function () {
     $scope.selectedContract = null;
     $scope.btnSaveClicked = false;
+    $scope.person.selected =  undefined;
+    $scope.checker.selected = undefined;
     //$('#form')[0].reset();
     $('#contractModal').modal();
 
@@ -70,6 +66,7 @@ function ContractCtrl($scope, ContractService,PersonService,$filter) {
     var myObject = JSON.parse(contract);
     $scope.selectedContract = myObject;
     $scope.person.selected = $scope.selectedContract.personInfo ;
+    $scope.checker.selected = $scope.selectedContract.checkerInfo;
     //console.log($scope.selectedContract.personId);
     $scope.btnSaveClicked = false;
     $('#contractModal').modal();
@@ -82,6 +79,7 @@ function ContractCtrl($scope, ContractService,PersonService,$filter) {
       return false;
     }
     $scope.selectedContract.personInfo = $scope.person.selected;
+    $scope.selectedContract.checkerInfo = $scope.checker.selected;
     //console.log($scope.selectedContract);
     if ($scope.selectedContract.id === undefined) {
       $scope.selectedContract.aliveFlag = '1';
@@ -139,7 +137,7 @@ function ContractCtrl($scope, ContractService,PersonService,$filter) {
   };
 }
 
-ContractCtrl.$inject = ['$scope', 'ContractService','PersonService', '$filter'];
+ContractCtrl.$inject = ['$scope', 'ContractService','PersonService', '$filter','UserService'];
 
 angular.module('angularApp')
   .controller('ContractCtrl', ContractCtrl);

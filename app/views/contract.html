@@ -116,6 +116,25 @@
               </div>
 
               <div class="form-group">
+                <label for="checkerInfo" class="col-md-2 control-label">买单老师</label>
+
+                <div class="input-group date eventTitle col-md-6">
+                  <!-- <select class="selectpicker"  data-live-search="true" title='请选择人员' name="personId" id="personId" ng-model="selectedContract.personId" required>
+                   <option ng-repeat="person in persons" value="{{person.id}}">{{person.name}}({{person.gender}})</option>-->
+                  <ui-select ng-model="checker.selected"  ng-disabled="disabled" name="checkerInfo" id="checkerInfo" required>
+                    <ui-select-match placeholder="请选择人员">{{$select.selected.staff}}</ui-select-match>
+                    <ui-select-choices repeat="checker in checkers | propsFilter: {staff: $select.search}">
+                      <div ng-bind-html="checker.staff | highlight: $select.search"></div>
+                    </ui-select-choices>
+                  </ui-select>
+                  <div class="alert alert-danger" ng-show="btnSaveClicked && form.checkerInfo.$error.required">请选择买单老师</div>
+
+
+
+                </div>
+              </div>
+
+              <div class="form-group">
                 <label for="NO" class="col-md-2 control-label">合同号</label>
 
                 <div class="input-group date eventTitle col-md-6">

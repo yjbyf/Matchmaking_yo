@@ -13,20 +13,20 @@ angular.module('angularApp')
     function ($scope, $http, $location, config, md5, UserService, FlashService, HostService) {
 
       $scope.refresh = function () {
-        console.log(config.apiUrl);
-        $http.get($scope.webServiceRootUrl).then(function (data) {
-          console.log(data);
-          console.log(data.data._embedded.user);
+        UserService.getUserList(function(data){
+          //console.log(data);
+          //console.log(data.data._embedded.user);
           $scope.users = data.data._embedded.user;
           for (var i = 0; i < $scope.users.length; i++) {
             var user = $scope.users[i];
-            var href = user._links.self.href;
-            var id = href.substr(href.lastIndexOf("/") + 1);
-            console.log(id);
-            user.id = id;
+            //var href = user._links.self.href;
+            //var id = href.substr(href.lastIndexOf("/") + 1);
+            //console.log(id);
+            user.id = user.pk;
           }
-
         });
+        //console.log(config.apiUrl);
+
       };
       $scope.webServiceRootUrl = config.urlHTTP + HostService.getHost() + config.userUrl;//":8080/user/";
 
