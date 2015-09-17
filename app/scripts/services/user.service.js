@@ -16,7 +16,8 @@
         $http({
           url: webservideSearchUrl,
           method: "GET",
-          params: {"userName": userName}
+          params: {"userName": userName,
+            "aliveFlag":"1"}
         }).then(function (data) {
           var result = data.data.result;
           //console.log(data.data.result);
@@ -25,9 +26,13 @@
       }, 1000);
     }
 
-    function setPasswordByAdmin(id,password, callback) {
+    function setRecordByAdmin(user, callback) {
+      var id = user.id;
+      var password = user.password;
       var params={
-        'password': md5.createHash(password)
+        'password': md5.createHash(password),
+        'staff':user.staff,
+        'aliveFlag':user.aliveFlag
       };
       $timeout(function () {
         $http.patch(
@@ -70,7 +75,7 @@
 
     var service = {};
     service.getCount = getCount;
-    service.setPasswordByAdmin = setPasswordByAdmin;
+    service.setRecordByAdmin = setRecordByAdmin;
     service.setPasswordBySelf = setPasswordBySelf;
     return service;
 

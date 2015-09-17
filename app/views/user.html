@@ -1,7 +1,4 @@
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-
-
-
   <form action="" class="form-horizontal" role="form" name="searchForm">
     <fieldset>
       <div class="form-group">
@@ -20,19 +17,21 @@
       <tr>
         <th>&nbsp;</th>
         <th>用户名</th>
+        <th>职员</th>
         <th>密码</th>
         <th>&nbsp;</th>
       </tr>
       </thead>
       <tbody>
-      <tr ng-repeat="user in users  | filter:query">
+      <tr ng-repeat="user in users  | filter:query  |  filter:{aliveFlag:'1'} ">
         <td><input type="checkbox" value="{{user.id}}"></td>
         <td>{{user.userName}}</td>
+        <td>{{user.staff}}</td>
         <td>*****************</td>
         <td>
           <div class="controls">
-            <button class="btn btn-primary" ng-click="modRecord('{{user}}');">修改密码</button>
-            <button class="btn btn-primary" ng-show="user.userName!='admin'" ng-click="delRecord('{{user.id}}');">删除</button>
+            <button class="btn btn-primary" ng-click="modRecord('{{user}}');">修改</button>
+            <button class="btn btn-primary" ng-show="user.userName!='admin'" ng-click="delRecord('{{user}}');">删除</button>
           </div>
         </td>
       </tr>
@@ -68,8 +67,19 @@
                 <label for="userName" class="col-md-2 control-label">用户名</label>
 
                 <div class="input-group date eventTitle col-md-6">
-                  <input class="form-control" size="16" type="text" ng-model="selectedUser.userName" id="userName"
-                         ng-readonly="userNameReadonly"/>
+                  <input class="form-control" size="16" type="text" placeholder="用户名" ng-model="selectedUser.userName" id="userName" name="userName"
+                         ng-readonly="userNameReadonly" required/>
+                  <div class="alert alert-danger" ng-show="btnSaveClicked && form.userName.$invalid">请输入用户名</div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="staff" class="col-md-2 control-label">职员</label>
+
+                <div class="input-group date eventTitle col-md-6">
+                  <input class="form-control" size="16" type="text" placeholder="职员"  ng-model="selectedUser.staff" id="staff" name="staff"
+                         required/>
+                  <div class="alert alert-danger" ng-show="btnSaveClicked && form.staff.$invalid">请输入职员</div>
                 </div>
               </div>
 

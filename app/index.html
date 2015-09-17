@@ -43,7 +43,9 @@
         <li ng-class="{ active: isActive('/contract')}"><a href="#/contract">合同管理</a></li>
         <li ng-class="{ active: isActive('/match')}"><a href="#/match">人员查询</a></li>
         <li ng-show="adminMenuVisible" ng-class="{ active: isActive('/user')}"><a href="#/user">用户管理</a></li>
+        <!--
         <li ng-show="adminMenuVisible" ng-class="{ active: isActive('/employee')}"><a href="#/employee">职员管理</a></li>
+        -->
         <li ng-class="{ active: isActive('/changePassword')}"><a href="#/changePassword">修改密码</a></li>
         <li><a  ng-click="logout();" href="">退出登录</a></li>
 
@@ -71,10 +73,11 @@
       <ul class="nav nav-sidebar" ng-show="adminMenuVisible">
         <li ng-class="{ active: isActive('/user')}"><a href="#/user">用户管理</a></li>
       </ul>
+      <!--
       <ul class="nav nav-sidebar" ng-show="adminMenuVisible">
         <li ng-class="{ active: isActive('/employee')}"><a href="#/employee">职员管理</a></li>
       </ul>
-
+      -->
       <ul class="nav nav-sidebar" ng-show="menuVisible">
         <li ng-class="{ active: isActive('/changePassword')}"><a href="#/changePassword">修改密码</a></li>
       </ul>
