@@ -66,16 +66,22 @@ function PersonCtrl($scope, PersonService, $filter) {
   $scope.refresh = function () {
     PersonService.getPersonList(function (data) {
       //console.log("person get:"+data);
+      if(data.data===undefined){
+        return false;
+      }
+      $scope.persons = data.data;
+      /*
       if(data.data._embedded===undefined){
         return false;
       }
-      $scope.persons = data.data._embedded.person;
+
+      $scope.persons = data.data._embedded.person;*/
       for (var i = 0; i < $scope.persons.length; i++) {
         var person = $scope.persons[i];
-        var href = person._links.self.href;
-        var id = href.substr(href.lastIndexOf("/") + 1);
+        //var href = person._links.self.href;
+        //var id = href.substr(href.lastIndexOf("/") + 1);
         //console.log(id);
-        person.id = id;
+        person.id = person.pk;
       }
       //console.log("person get:"+data);
     });

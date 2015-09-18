@@ -12,10 +12,15 @@ function ContractCtrl($scope, ContractService,PersonService,$filter,UserService)
   $scope.refresh = function () {
     ContractService.getContractList(function (data) {
       //console.log("contract get:"+data);
+      if(data.data===undefined){
+        return false;
+      }
+      $scope.contracts = data.data;
+      /*
       if(data.data._embedded===undefined){
         return false;
       }
-      $scope.contracts = data.data._embedded.contract;
+      $scope.contracts = data.data._embedded.contract;*/
       for (var i = 0; i < $scope.contracts.length; i++) {
         var contract = $scope.contracts[i];
         //var href = contract._links.self.href;
@@ -31,7 +36,11 @@ function ContractCtrl($scope, ContractService,PersonService,$filter,UserService)
 
   $scope.init = function(){
     PersonService.getPersonList(function(data){
-      $scope.persons = data.data._embedded.person;
+      if(data.data===undefined){
+        return false;
+      }
+      $scope.persons = data.data;
+      //$scope.persons = data.data._embedded.person;
       for (var i = 0; i < $scope.persons.length; i++) {
         var person = $scope.persons[i];
         //var href = contract._links.self.href;

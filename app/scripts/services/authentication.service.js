@@ -44,10 +44,11 @@
         currentUser: {
           userName: userName,
           password: password,
-          id:id
+          id:id,
+          securityCode:userName+","+password+","+id
         }
       };
-      $http.defaults.headers.common['Authorization'] = $rootScope.globals.currentUser.userName + "," + $rootScope.globals.currentUser.password; // jshint ignore:line
+      $http.defaults.headers.common['Authorization'] = $rootScope.globals.currentUser.securityCode;//.userName + "," + $rootScope.globals.currentUser.password; // jshint ignore:line
       $cookieStore.put('globals', $rootScope.globals);
 
     }

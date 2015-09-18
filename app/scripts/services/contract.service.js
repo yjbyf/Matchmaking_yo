@@ -23,6 +23,7 @@
     }
 
     function newContract(contract,callback) {
+      contract.createdBy = $rootScope.globals.currentUser.id;
       $timeout(function () {
         $http({
           url: webServiceSavedUrl,

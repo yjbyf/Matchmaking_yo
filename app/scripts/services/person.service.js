@@ -22,6 +22,7 @@
     }
 
     function newPerson(person, callback) {
+      person.createdBy = $rootScope.globals.currentUser.id;
       $timeout(function () {
         $http({
           url: webServiceRootUrl,
