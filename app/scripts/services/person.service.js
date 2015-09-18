@@ -2,8 +2,8 @@
   'use strict';
 
 
-  function PersonService($location, $http, $cookieStore, $rootScope, $timeout, config,HostService) {
-    var webServiceRootUrl = config.urlHTTP + HostService.getHost() + config.restPort + "person/";
+  function PersonService($location, $http, $cookieStore, $rootScope, $timeout, config, HostService) {
+    var webServiceRootUrl = config.urlHTTP + HostService.getHost() + config.restPort + config.restUrl + "person/";
 
     function getPersonList(callback) {
       /* Dummy authentication for testing, uses $timeout to simulate api call
@@ -21,7 +21,7 @@
       }, 1000);
     }
 
-    function newPerson(person,callback) {
+    function newPerson(person, callback) {
       $timeout(function () {
         $http({
           url: webServiceRootUrl,
@@ -29,12 +29,12 @@
           headers: {
             'Content-Type': 'application/json'
           },
-          data:person
+          data: person
           /*data: {
-            'name': person.name,
-            'gender': person.gender,
-            'birthDate':person.birthDate
-          }*/
+           'name': person.name,
+           'gender': person.gender,
+           'birthDate':person.birthDate
+           }*/
         }).
           then(function (response) {
             callback(response);
@@ -44,12 +44,12 @@
       }, 1000);
     }
 
-    function savePerson(person,callback){
+    function savePerson(person, callback) {
       $timeout(function () {
         //alert(webServiceRootUrl+person.id);
         //alert(person);
         $http.patch(
-          webServiceRootUrl+person.id,
+          webServiceRootUrl + person.id,
           person
         ).then(function () {
             callback();
@@ -63,7 +63,7 @@
       }, 1000);
     }
 
-    function deletePerson(idToBeDeleted,callback){
+    function deletePerson(idToBeDeleted, callback) {
       $timeout(function () {
         $http.delete(webServiceRootUrl + idToBeDeleted).then(function () {
           //console.log("done delete" + response);
@@ -87,7 +87,7 @@
     return service;
   }
 
-  PersonService.$inject = ['$location', '$http', '$cookieStore', '$rootScope', '$timeout', 'config','HostService'];
+  PersonService.$inject = ['$location', '$http', '$cookieStore', '$rootScope', '$timeout', 'config', 'HostService'];
 
   angular
     .module('angularApp')

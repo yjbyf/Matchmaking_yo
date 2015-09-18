@@ -106,10 +106,10 @@ myApp.filter('propsFilter', function() {
 
 myApp.constant('config', {
   admin : "admin",
-  userUrl :':8080/user/',
+  noPrivUrl:"open/",
+  restUrl:"rest/",
   restPort:':8080/',
-  urlHTTP:'http://',
-  validLoginUul : ':8080/loginValid/'
+  urlHTTP:'http://'
 });
 
 function run($rootScope, $location, $cookieStore, $http) {

@@ -3,7 +3,7 @@
 
 
   function AuthenticationService($location, $http, $cookieStore, $rootScope, $timeout, config,HostService) {
-    var webServiceLginUrl = config.urlHTTP + HostService.getHost() + config.validLoginUul;
+    var webServiceLoginUrl = config.urlHTTP + HostService.getHost() + config.restPort + config.noPrivUrl+"loginValid/";
 
     function Login(userName, password, callback) {
 
@@ -12,7 +12,7 @@
       $timeout(function () {
 
         $http({
-          url: webServiceLginUrl,
+          url: webServiceLoginUrl,
           method: "GET",
           params: {"userName": userName, "password": password}
         }).then(function (data) {

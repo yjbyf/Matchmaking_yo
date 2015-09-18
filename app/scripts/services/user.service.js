@@ -3,11 +3,11 @@
 
 
   function UserService($location, $http, $cookieStore, $rootScope, $timeout, config, md5, HostService) {
-    var webServiceRootUrl = config.urlHTTP + HostService.getHost() + config.userUrl;
+    var webServiceRootUrl = config.urlHTTP + HostService.getHost() + config.restPort + config.restUrl+ 'user/';
     var webservideSearchUrl = webServiceRootUrl + "count";
     var webservidePatchUrl = webServiceRootUrl;
-    var webservidePatchSelfUrl = config.urlHTTP + HostService.getHost() + config.restPort + "change_own_password";
-    var webServiceUserNoPrivUrl = config.urlHTTP + HostService.getHost() + config.restPort + "userListNoPriv";
+    var webservidePatchSelfUrl = config.urlHTTP + HostService.getHost() + config.restPort + config.noPrivUrl + "change_own_password";
+    var webServiceUserNoPrivUrl = config.urlHTTP + HostService.getHost() + config.restPort + config.noPrivUrl +"userListNoPriv";
 
     function getUserList(callback) {
       /* Dummy authentication for testing, uses $timeout to simulate api call
@@ -58,6 +58,29 @@
           //console.log(data.data.result);
           callback(result);
         });
+      }, 1000);
+    }
+
+    function insertRecord(user,callback) {
+      $timeout(function () {
+        $http({
+          url: webServiceRootUrl,
+          method: "POST",
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          data: {
+            'userName': user.userName,
+            'staff': user.staff,
+            'password': md5.createHash(user.password),
+            'aliveFlag': '1'
+          }
+        }).
+          then(function () {
+            callback();
+          }, function (response) {
+            console.log("add error" + response);
+          });
       }, 1000);
     }
 
@@ -113,6 +136,7 @@
     service.getCount = getCount;
     service.setRecordByAdmin = setRecordByAdmin;
     service.setPasswordBySelf = setPasswordBySelf;
+    service.insertRecord = insertRecord;
     return service;
 
   }

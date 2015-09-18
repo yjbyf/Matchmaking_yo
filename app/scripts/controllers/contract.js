@@ -12,6 +12,9 @@ function ContractCtrl($scope, ContractService,PersonService,$filter,UserService)
   $scope.refresh = function () {
     ContractService.getContractList(function (data) {
       //console.log("contract get:"+data);
+      if(data.data._embedded===undefined){
+        return false;
+      }
       $scope.contracts = data.data._embedded.contract;
       for (var i = 0; i < $scope.contracts.length; i++) {
         var contract = $scope.contracts[i];

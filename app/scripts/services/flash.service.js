@@ -1,15 +1,11 @@
 ﻿(function () {
     'use strict';
 
-
     function FlashService($rootScope) {
-
       function initService() {
         $rootScope.$on('$locationChangeStart', function () {
           clearFlashMessage();
         });
-
-
       }
 
       function clearFlashMessage() {
@@ -40,16 +36,11 @@
         };
       }
         var service = {};
-
         service.Success = Success;
         service.Error = Error;
         service.clearFlashMessage = clearFlashMessage;
-
         initService();
-
         return service;
-
-
     }
 
   angular

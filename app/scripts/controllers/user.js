@@ -9,11 +9,11 @@
  * Controller of the angularApp
  */
 angular.module('angularApp')
-  .controller('UserCtrl', ['$scope', '$http', '$location', 'config', 'md5', 'UserService', 'FlashService', 'HostService',
-    function ($scope, $http, $location, config, md5, UserService, FlashService, HostService) {
+  .controller('UserCtrl', ['$scope', '$http', '$location', 'config', 'md5', 'UserService', 'FlashService',
+    function ($scope, $http, $location, config, md5, UserService, FlashService) {
 
       $scope.refresh = function () {
-        UserService.getUserList(function(data){
+        UserService.getUserList(function (data) {
           //console.log(data);
           //console.log(data.data._embedded.user);
           $scope.users = data.data._embedded.user;
@@ -28,9 +28,7 @@ angular.module('angularApp')
         //console.log(config.apiUrl);
 
       };
-      $scope.webServiceRootUrl = config.urlHTTP + HostService.getHost() + config.userUrl;//":8080/user/";
 
-      //$scope.webServicesSearchUrl = $scope.webServiceRootUrl  +  "/search/findByUserName";
       $(document).ready(function () {
         $scope.refresh();
       });
@@ -80,15 +78,6 @@ angular.module('angularApp')
         UserService.setRecordByAdmin($scope.toBeDeleted, function () {
           $scope.refresh();
         });
-        /*
-        $http.delete($scope.webServiceRootUrl + $scope.idToBeDeleted).then(function (response) {
-          console.log("done delete" + response);
-          $scope.refresh();
-
-        }, function (response) {
-          console.log("delete error" + response);
-        });*/
-
       };
 
       $scope.cancelDelete = function () {
@@ -112,31 +101,11 @@ angular.module('angularApp')
               FlashService.Error("已有此用户名" + $scope.selectedUser.userName);
               return false;
             } else {
-              $http({
-                url: $scope.webServiceRootUrl,
-                method: "POST",
-                headers: {
-                  'Content-Type': 'application/json'
-                },
-                data: {
-                  'userName': $scope.selectedUser.userName,
-                  'staff': $scope.selectedUser.staff,
-                  'password': md5.createHash($scope.selectedUser.password),
-                  'aliveFlag':'1'
-                }
-              }).
-                then(function (response) {
-                  console.log("done add" + response);
-                  $('#userModal').modal('toggle');
-                  //refresh grid
-                  $scope.refresh();
-                  // this callback will be called asynchronously
-                  // when the response is available
-                }, function (response) {
-                  console.log("add error" + response);
-                  // called asynchronously if an error occurs
-                  // or server returns response with an error status.
-                });
+              UserService.insertRecord($scope.selectedUser, function () {
+                $('#userModal').modal('toggle');
+                //refresh grid
+                $scope.refresh();
+              });
             }
           });
 

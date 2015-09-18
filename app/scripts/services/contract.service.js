@@ -3,7 +3,7 @@
 
 
   function ContractService($location, $http, $cookieStore, $rootScope, $timeout, config,HostService) {
-    var webServiceRootUrl = config.urlHTTP + HostService.getHost() + config.restPort + "contract/";
+    var webServiceRootUrl = config.urlHTTP + HostService.getHost() + config.restPort + config.restUrl + "contract/";
     var webServiceSavedUrl = webServiceRootUrl + "save/";
 
     function getContractList(callback) {

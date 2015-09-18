@@ -9,9 +9,8 @@
  */
 
 
-function changePasswordCtrl($scope, $rootScope, $location, $cookieStore, $http, config, md5, AuthenticationService, FlashService,UserService,HostService) {
+function changePasswordCtrl($scope, $rootScope, $location, $cookieStore, $http, config, md5, AuthenticationService, FlashService,UserService) {
 
-  $scope.webServiceLginUrl = config.urlHTTP + HostService.getHost() + config.validLoginUul;
   $scope.doChange = function (valid) {
     if (!valid) {
       return false;

@@ -3,7 +3,7 @@
 
 
   function EmployeeService($location, $http, $cookieStore, $rootScope, $timeout, config,HostService) {
-    var webServiceRootUrl = config.urlHTTP + HostService.getHost() + config.restPort + "employee/";
+    var webServiceRootUrl = config.urlHTTP + HostService.getHost() + config.restPort + config.restUrl+"employee/";
 
     function getEmployeeList(callback) {
       /* Dummy authentication for testing, uses $timeout to simulate api call

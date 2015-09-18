@@ -8,9 +8,8 @@
  * Controller of the angularApp
  */
 
-function LoginCtrl($scope,$rootScope,$location,$cookieStore,$http, config,md5,AuthenticationService,FlashService,HostService ) {
+function LoginCtrl($scope,$rootScope,$location,$cookieStore,$http, config,md5,AuthenticationService,FlashService ) {
 
-  $scope.webServiceLginUrl = config.urlHTTP + HostService.getHost() + config.validLoginUul;
   $scope.doLogin = function (valid) {
     if (!valid) {
       return false;
