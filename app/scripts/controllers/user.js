@@ -16,6 +16,9 @@ angular.module('angularApp')
         UserService.getUserList(function (data) {
           //console.log(data);
           //console.log(data.data._embedded.user);
+          if(data.data._embedded===undefined){
+            return false;
+          }
           $scope.users = data.data._embedded.user;
           for (var i = 0; i < $scope.users.length; i++) {
             var user = $scope.users[i];
