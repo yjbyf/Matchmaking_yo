@@ -6,7 +6,8 @@
  * # ContractCtrl
  * Controller of the angularApp
  */
-function ContractCtrl($scope, ContractService,PersonService,$filter,UserService) {
+function ContractCtrl($scope, ContractService,PersonService,$filter,UserService,config,FlashService,AuthenticationService) {
+  $scope.showAddButton = !AuthenticationService.getAdminMenuVisible();
   $scope.person = {};
   $scope.checker = {};
   $scope.refresh = function () {
@@ -36,6 +37,7 @@ function ContractCtrl($scope, ContractService,PersonService,$filter,UserService)
 
   $scope.init = function(){
     PersonService.getPersonList(function(data){
+      //console.log(data);
       if(data.data===undefined){
         return false;
       }
@@ -69,18 +71,23 @@ function ContractCtrl($scope, ContractService,PersonService,$filter,UserService)
     $scope.person.selected =  undefined;
     $scope.checker.selected = undefined;
     //$('#form')[0].reset();
+    FlashService.clearFlashMessage();
     $('#contractModal').modal();
 
   };
 
   $scope.modRecord = function (contract) {
     //$('#form')[0].reset();
-    var myObject = JSON.parse(contract);
-    $scope.selectedContract = myObject;
-    $scope.person.selected = $scope.selectedContract.personInfo ;
-    $scope.checker.selected = $scope.selectedContract.checkerInfo;
+    var json = JSON.parse(contract);
+    $scope.selectedContract = json;
+    var personInfo = PersonService.findPerson( $scope.persons,json.personId);
+    $scope.person.selected =personInfo;
+    var checkerInfo = UserService.findUser($scope.checkers,json.checkerId);
+    console.log("init:"+checkerInfo);
+    $scope.checker.selected = checkerInfo;
     //console.log($scope.selectedContract.personId);
     $scope.btnSaveClicked = false;
+    FlashService.clearFlashMessage();
     $('#contractModal').modal();
   };
 
@@ -90,27 +97,34 @@ function ContractCtrl($scope, ContractService,PersonService,$filter,UserService)
     if(!formValid) {
       return false;
     }
+    //console.log("init:"+$scope.person.selected);
     $scope.selectedContract.personInfo = $scope.person.selected;
     $scope.selectedContract.checkerInfo = $scope.checker.selected;
     //console.log($scope.selectedContract);
-    if ($scope.selectedContract.id === undefined) {
-      $scope.selectedContract.aliveFlag = '1';
-      //console.log($scope.selectedContract);
-      ContractService.newContract($scope.selectedContract, function () {
-        $('#contractModal').modal('toggle');
-        //console.log("done add" + response);
-        //refresh grid
-        $scope.refresh();
-      });
-    } else {
-      //alert("start mod");
-      ContractService.saveContract($scope.selectedContract, function () {
-        $('#contractModal').modal('toggle');
-        //console.log("done add" + response);
-        //refresh grid
-        $scope.refresh();
-      });
-    }
+    ContractService.validContract($scope.selectedContract,function(data){
+      if(data.data.result===config.failed){
+         FlashService.Error("此客户合同日期与其它合同日期重叠");
+         return false;
+      }
+      if ($scope.selectedContract.id === undefined) {
+        $scope.selectedContract.aliveFlag = '1';
+        //console.log($scope.selectedContract);
+        ContractService.newContract($scope.selectedContract, function () {
+          $('#contractModal').modal('toggle');
+          //console.log("done add" + response);
+          //refresh grid
+          $scope.refresh();
+        });
+      } else {
+        //alert("start mod");
+        ContractService.saveContract($scope.selectedContract, function () {
+          $('#contractModal').modal('toggle');
+          //console.log("done add" + response);
+          //refresh grid
+          $scope.refresh();
+        });
+      }
+    });
   };
 
   $scope.doDelete = function () {
@@ -153,7 +167,7 @@ function ContractCtrl($scope, ContractService,PersonService,$filter,UserService)
   };
 }
 
-ContractCtrl.$inject = ['$scope', 'ContractService','PersonService', '$filter','UserService'];
+ContractCtrl.$inject = ['$scope', 'ContractService','PersonService', '$filter','UserService','config','FlashService','AuthenticationService'];
 
 angular.module('angularApp')
   .controller('ContractCtrl', ContractCtrl);

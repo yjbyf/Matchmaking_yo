@@ -32,7 +32,7 @@
 
     <fieldset>
       <div class="form-group">
-        <label for="eventTitle" class="col-md-2 control-label">姓名</label>
+        <label for="eventTitle" class="col-md-2 control-label">年龄</label>
 
         <div class="col-md-4">
           <input class="form-control" size="16" type="text" ng-model="name" id="eventTitle" required/>
@@ -78,42 +78,47 @@
       <thead>
       <tr>
         <th>&nbsp;</th>
+        <!--
         <th>编号</th>
         <th>注册日期</th>
         <th>收费</th>
+        -->
         <th>姓名</th>
         <th>出生年月</th>
         <th>身高</th>
         <th>学历</th>
         <th>户籍</th>
         <th>工作单位</th>
-        <th>收入</th>
-        <th>婚史</th>
-        <th>子女</th>
+        <th>年薪(万)</th>
+        <th>家庭情况</th>
         <th>住房</th>
         <th>联系电话</th>
+        <th>择偶要求</th>
         <th>&nbsp;</th>
       </tr>
       </thead>
       <tbody>
-      <tr ng-repeat="people in peoples  | filter:query">
-        <td>&nbsp;</td>
-        <td>{{people.id}}</td>
-        <td>{{people.registerDate}}</td>
-        <td>{{people.fee}}</td>
-        <td>{{people.name}}</td>
-        <td>{{people.birthDate}}</td>
-        <td>{{people.height}}</td>
-        <td>{{people.education}}</td>
-        <td>{{people.census}}</td>
-        <td>{{people.company}}</td>
-        <td>{{people.salary}}</td>
-        <td>{{people.married}}</td>
-        <td>{{people.children}}</td>
-        <td>{{people.house}}</td>
-        <td>{{people.phone}}</td>
+      <tr ng-repeat="person in persons  | filter:query | filter:{aliveFlag:'1'}">
+        <td><input type="checkbox" value="{{person}}" ng-click="toggleSelection(person)"></td>
+        <!--<td>{{person.id}}</td>
+        <td>{{person.registerDate}}</td>
+        <td>{{person.fee}}</td>
+        -->
+        <td>{{person.name}}</td>
+        <td>{{person.birthDate}}</td>
+        <td>{{person.height}}</td>
+        <td>{{person.education}}</td>
+        <td>{{person.census}}</td>
+        <td>{{person.company}}</td>
+        <td>{{person.salary}}</td>
+        <td>{{person.family}}</td>
+        <td>{{person.house}}</td>
+        <td>{{person.phone}}</td>
+        <td>{{person.requirement}}</td>
         <td>
-          &nbsp;
+          <div class="controls">
+            <button class="btn btn-primary" ng-click="addMatch('{{person}}');">加入配对</button>
+          </div>
         </td>
       </tr>
 

@@ -18,7 +18,8 @@ var myApp = angular
     'ngTouch',
     'angular-md5',
     'ui.bootstrap.datetimepicker',
-    'ui.select'
+    'ui.select',
+    'angular-loading-bar'
   ]);
 
 
@@ -109,7 +110,8 @@ myApp.constant('config', {
   noPrivUrl:"open/",
   restUrl:"rest/",
   restPort:':8080/',
-  urlHTTP:'http://'
+  urlHTTP:'http://',
+  failed:'failed'
 });
 
 function run($rootScope, $location, $cookieStore, $http) {
@@ -117,7 +119,7 @@ function run($rootScope, $location, $cookieStore, $http) {
   //console.log("app run"+$rootScope.globals);
   $rootScope.globals = $cookieStore.get('globals') || {};
   if ($rootScope.globals.currentUser) {
-    $http.defaults.headers.common['Authorization'] =  $rootScope.globals.currentUser.securityCode;
+    $http.defaults.headers.common['Authorization'] =  $rootScope.globals.currentUser.securityCode;// jshint ignore:line
     //.userName+","+ $rootScope.globals.currentUser.password; // jshint ignore:line
   }
   //$rootScope.$on('$locationChangeStart', function (event, next, current) {

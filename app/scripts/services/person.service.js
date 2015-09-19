@@ -21,6 +21,16 @@
       }, 1000);
     }
 
+    function findPerson(persons,personId){
+      var i;
+      for(i=0;i<persons.length;i++){
+        if(persons[i].id===personId){
+          return persons[i];
+        }
+      }
+      return undefined;
+    }
+
     function newPerson(person, callback) {
       person.createdBy = $rootScope.globals.currentUser.id;
       $timeout(function () {
@@ -85,6 +95,7 @@
     service.newPerson = newPerson;
     service.savePerson = savePerson;
     service.deletePerson = deletePerson;
+    service.findPerson = findPerson;
     return service;
   }
 

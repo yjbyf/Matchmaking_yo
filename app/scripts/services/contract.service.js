@@ -4,7 +4,8 @@
 
   function ContractService($location, $http, $cookieStore, $rootScope, $timeout, config,HostService) {
     var webServiceRootUrl = config.urlHTTP + HostService.getHost() + config.restPort + config.restUrl + "contract/";
-    var webServiceSavedUrl = webServiceRootUrl + "save/";
+    var webServiceSaveUrl = webServiceRootUrl + "save/";
+    var webServiceValidUrl = webServiceRootUrl + "valid/";
 
     function getContractList(callback) {
       /* Dummy authentication for testing, uses $timeout to simulate api call
@@ -22,11 +23,28 @@
       }, 1000);
     }
 
+    function validContract(contract,callback){
+      $timeout(function () {
+        $http({
+          url: webServiceValidUrl,
+          method: "POST",
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          data:contract
+        }).then(function (data) {
+          //var result = data.data.result;
+          //console.log(data.data.result);
+          callback(data);
+        });
+      }, 1000);
+    }
+
     function newContract(contract,callback) {
       contract.createdBy = $rootScope.globals.currentUser.id;
       $timeout(function () {
         $http({
-          url: webServiceSavedUrl,
+          url: webServiceSaveUrl,
           method: "POST",
           headers: {
             'Content-Type': 'application/json'
@@ -46,7 +64,7 @@
         //alert(webServiceRootUrl+Contract.id);
         //alert(Contract);
         $http.patch(
-          webServiceSavedUrl,//+contract.id,
+          webServiceSaveUrl,//+contract.id,
           contract
         ).then(function () {
             callback();
@@ -81,6 +99,7 @@
     service.newContract = newContract;
     service.saveContract = saveContract;
     service.deleteContract = deleteContract;
+    service.validContract = validContract;
     return service;
   }
 

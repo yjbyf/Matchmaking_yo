@@ -28,6 +28,7 @@ module.exports = function(config) {
       'bower_components/moment/moment.js',
       'bower_components/angular-bootstrap-datetimepicker/src/js/datetimepicker.js',
       'bower_components/angular-cookies/angular-cookies.js',
+      'bower_components/angular-loading-bar/build/loading-bar.js',
       'bower_components/angular-md5/angular-md5.js',
       'bower_components/angular-resource/angular-resource.js',
       'bower_components/angular-route/angular-route.js',

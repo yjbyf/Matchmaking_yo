@@ -41,6 +41,16 @@
       }, 1000);
     }
 
+    function findUser(users,userId){
+      var i;
+      for(i=0;i<users.length;i++){
+        if(users[i].id===userId){
+          return users[i];
+        }
+      }
+      return undefined;
+    }
+
     function getCount(userName, callback) {
       /* Dummy authentication for testing, uses $timeout to simulate api call
        ----------------------------------------------*/
@@ -137,6 +147,7 @@
     service.setRecordByAdmin = setRecordByAdmin;
     service.setPasswordBySelf = setPasswordBySelf;
     service.insertRecord = insertRecord;
+    service.findUser = findUser;
     return service;
 
   }
