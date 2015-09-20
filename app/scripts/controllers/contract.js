@@ -38,7 +38,7 @@ function ContractCtrl($scope, ContractService,PersonService,$filter,UserService,
   };
 
   $scope.init = function(){
-    $scope.sortType='name';
+    //$scope.sortType='name';
     PersonService.getPersonList(function(data){
       //console.log(data);
       if(data.data===undefined){

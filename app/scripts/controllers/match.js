@@ -6,10 +6,30 @@
  * # PersonCtrl
  * Controller of the angularApp
  */
-function MatchCtrl($scope, PersonService, $filter) {
+function MatchCtrl($scope, PersonService, $filter,UserService,AuthenticationService,ContractService) {
+  $scope.showAddButton = !AuthenticationService.getAdminMenuVisible();
+  $scope.person = {};
+  $scope.serviceEmployee = {};
   $scope.refresh = function () {
     PersonService.getPersonList(function (data) {
       //console.log("person get:"+data);
+      if (data.data === undefined) {
+        return false;
+      }
+      $scope.persons = data.data;
+      for (var i = 0; i < $scope.persons.length; i++) {
+        var person = $scope.persons[i];
+        person.id = person.pk;
+      }
+      $scope.displayedCollection = [].concat($scope.persons);
+    });
+  };
+
+  $(document).ready(function () {
+    $('#tabs').tab();
+    $scope.tabTitle = 'grid';
+    $scope.refresh();
+    ContractService.getContractList(function(data){
       if(data.data===undefined){
         return false;
       }
@@ -19,8 +39,18 @@ function MatchCtrl($scope, PersonService, $filter) {
         person.id = person.pk;
       }
     });
+    UserService.getUserListWithoutPriv(function(data){
+      $scope.serviceEmployees = data.data;
+    });
+  });
+
+  $scope.tabClick = function (tabTitle) {
+    $scope.tabTitle = tabTitle;
   };
-  $scope.refresh();
+
+  $scope.onMatchDateeSet = function (newDate) {
+    $scope.selectedMatch.matchDate = $filter('date')(newDate, 'yyyy-MM-dd');
+  };
 
   $scope.addMatch = function (person) {
     var myObject = JSON.parse(person);
@@ -39,7 +69,7 @@ function MatchCtrl($scope, PersonService, $filter) {
   $scope.doSave = function (formValid) {
     //console.log(formValid);
     $scope.btnSaveClicked = true;
-    if(!formValid) {
+    if (!formValid) {
       return false;
     }
     if ($scope.selectedPerson.id === undefined) {
@@ -65,10 +95,10 @@ function MatchCtrl($scope, PersonService, $filter) {
   $scope.doDelete = function () {
     //console.log($scope.selection);
     //TODO 优化为批量删除，或者等全部删除后再刷新
-    for(var i=0;i<$scope.selectionPersons.length;i++){
+    for (var i = 0; i < $scope.selectionPersons.length; i++) {
       var person = $scope.selectionPersons[i];
       person.aliveFlag = '0';
-      PersonService.savePerson(person,$scope.refresh);
+      PersonService.savePerson(person, $scope.refresh);
     }
   };
 
@@ -97,7 +127,7 @@ function MatchCtrl($scope, PersonService, $filter) {
 
 }
 
-MatchCtrl.$inject = ['$scope', 'PersonService', '$filter'];
+MatchCtrl.$inject = ['$scope', 'PersonService', '$filter','UserService','AuthenticationService','ContractService'];
 
 angular.module('angularApp')
   .controller('MatchCtrl', MatchCtrl);
