@@ -29,13 +29,16 @@ function ContractCtrl($scope, ContractService,PersonService,$filter,UserService,
         //console.log(id);
         contract.id = contract.pk;
       }
+      //$scope.rowCollection = $scope.contracts;
+      $scope.displayedCollection = [].concat($scope.contracts);
 
-     //console.log($scope.contracts);
+      //console.log($scope.contracts);
       //console.log("contract get:"+data);
     });
   };
 
   $scope.init = function(){
+    $scope.sortType='name';
     PersonService.getPersonList(function(data){
       //console.log(data);
       if(data.data===undefined){
@@ -58,7 +61,6 @@ function ContractCtrl($scope, ContractService,PersonService,$filter,UserService,
     });
   };
   $(document).ready(function() {
-
     $scope.init();
     $scope.refresh();
   });

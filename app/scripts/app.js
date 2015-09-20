@@ -19,7 +19,8 @@ var myApp = angular
     'angular-md5',
     'ui.bootstrap.datetimepicker',
     'ui.select',
-    'angular-loading-bar'
+    'angular-loading-bar',
+    'smart-table'
   ]);
 
 

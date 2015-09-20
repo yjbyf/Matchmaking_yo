@@ -28,10 +28,14 @@ function PersonCtrl($scope, PersonService, $filter,AuthenticationService) {
         //console.log(id);
         person.id = person.pk;
       }
+      $scope.displayedCollection = [].concat($scope.persons);
       //console.log("person get:"+data);
     });
   };
-  $scope.refresh();
+
+  $(document).ready(function() {
+    $scope.refresh();
+  });
 
 
   $scope.newRecord = function () {
