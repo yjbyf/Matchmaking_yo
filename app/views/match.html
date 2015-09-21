@@ -65,7 +65,7 @@
               <div class="form-group">
                 <label for="matchDate" class="col-md-1 control-label">配对日期</label>
 
-                <div class="col-md-5" data-date="" data-link-field="dtp_start"
+                <div class="col-md-4" data-date="" data-link-field="dtp_start"
                      id="dtp_start">
                   <div class="dropdown">
                     <a class="dropdown-toggle" id="matchDate" role="button" data-toggle="dropdown" data-target="#"
@@ -80,7 +80,7 @@
                     <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
                       <datetimepicker data-ng-model="selectedMatch.matchDate"
                                       data-datetimepicker-config="{ dropdownSelector: '#matchDate',startView:'year',minView:'day' }"
-                                      data-on-set-time="onMatchDateeSet(newDate)"/>
+                                      data-on-set-time="onMatchDateSet(newDate)"/>
                     </ul>
                   </div>
                   <div class="alert alert-danger" ng-show="btnSaveClicked && form.matchDate.$error.required">请选择合同开始日期
@@ -90,12 +90,12 @@
 
                 <label for="personInfo" class="col-md-1 control-label">姓名</label>
 
-                <div class="col-md-5">
-                  <ui-select ng-model="person.selected" ng-disabled="disabled" name="personInfo" id="personInfo"
+                <div class="col-md-4">
+                  <ui-select ng-model="person.selected" ng-disabled="getMatchNameDisable()" name="personInfo" id="personInfo"
                              required>
                     <ui-select-match placeholder="请选择人员">{{$select.selected.name}}</ui-select-match>
                     <ui-select-choices
-                      repeat="person in persons | propsFilter: {name: $select.search, gender: $select.search,startDate:$select.search,endDate:$select.search}  | filter:{aliveFlag:'1'} ">
+                      repeat="person in persons | propsFilter: {name: $select.search, gender: $select.search,startDate:$select.search,endDate:$select.search}  | filter:{aliveFlag:'1'} | dateFilter:selectedMatch.matchDate:'startDate':'endDate'">
                       <div ng-bind-html="person.name | highlight: $select.search"></div>
                       <small>
                         性别: <span ng-bind-html="''+person.gender | highlight: $select.search"></span>
@@ -107,13 +107,15 @@
                   <div class="alert alert-danger" ng-show="btnSaveClicked && form.personInfo.$error.required">请选择人员
                   </div>
                 </div>
-
+                <div class="col-md-1">
+                  <button class="btn btn-primary" ng-disabled="getMatchNameDisable()" ng-click="">查找</button>
+                </div>
               </div>
 
               <div class="form-group">
                 <label for="serviceEmployee" class="col-md-1 control-label">服务老师</label>
 
-                <div class="col-md-5">
+                <div class="col-md-4">
                   <ui-select ng-model="serviceEmployee.selected" ng-disabled="disabled" name="serviceEmployee"
                              id="serviceEmployee"
                              required>
@@ -131,12 +133,12 @@
 
                 <label for="matchPerson" class="col-md-1 control-label">配对对象</label>
 
-                <div class="col-md-5">
-                  <ui-select ng-model="matchPerson.selected" ng-disabled="disabled" name="matchPerson" id="matchPerson"
+                <div class="col-md-4">
+                  <ui-select ng-model="matchPerson.selected" ng-disabled="getMatchObjectDisable()" name="matchPerson" id="matchPerson"
                              required>
                     <ui-select-match placeholder="请选择人员">{{$select.selected.name}}</ui-select-match>
                     <ui-select-choices
-                      repeat="matchPerson in persons | propsFilter: {name: $select.search, gender: $select.search,startDate:$select.search,endDate:$select.search}  | filter:{aliveFlag:'1'} ">
+                      repeat="matchPerson in persons | propsFilter: {name: $select.search, gender: $select.search,startDate:$select.search,endDate:$select.search}  | filter:{aliveFlag:'1',gender:'!' + person.selected.gender } | dateFilter:selectedMatch.matchDate:'startDate':'endDate' ">
                       <div ng-bind-html="matchPerson.name | highlight: $select.search"></div>
                       <small>
                         性别: <span ng-bind-html="''+matchPerson.gender | highlight: $select.search"></span>
@@ -147,6 +149,9 @@
                   </ui-select>
                   <div class="alert alert-danger" ng-show="btnSaveClicked && form.matchPerson.$error.required">请选择人员
                   </div>
+                </div>
+                <div class="col-md-1">
+                  <button class="btn btn-primary" ng-disabled="getMatchObjectDisable()" ng-click="">查找</button>
                 </div>
               </div>
 

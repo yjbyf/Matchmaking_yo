@@ -20,7 +20,9 @@ var myApp = angular
     'ui.bootstrap.datetimepicker',
     'ui.select',
     'angular-loading-bar',
-    'smart-table'
+    'smart-table',
+    'propsFilter',//自定义过滤器
+    'dateFilter'
   ]);
 
 
@@ -68,44 +70,6 @@ function config($routeProvider) {
 }
 
 myApp.config(config);
-
-/**
- * AngularJS default filter with the following expression:
- * "person in people | filter: {name: $select.search, age: $select.search}"
- * performs a AND between 'name: $select.search' and 'age: $select.search'.
- * We want to perform a OR.
- */
-myApp.filter('propsFilter', function() {
-  return function(items, props) {
-    var out = [];
-
-    if (angular.isArray(items)) {
-      items.forEach(function(item) {
-        var itemMatches = false;
-
-        var keys = Object.keys(props);
-        for (var i = 0; i < keys.length; i++) {
-          var prop = keys[i];
-          var text = props[prop].toLowerCase();
-          //console.log(prop);
-          if (item[prop].toString().toLowerCase().indexOf(text) !== -1) {
-            itemMatches = true;
-            break;
-          }
-        }
-
-        if (itemMatches) {
-          out.push(item);
-        }
-      });
-    } else {
-      // Let the output be the input untouched
-      out = items;
-    }
-
-    return out;
-  };
-});
 
 myApp.constant('config', {
   admin : "admin",

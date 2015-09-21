@@ -48,10 +48,24 @@ function MatchCtrl($scope, PersonService, $filter,UserService,AuthenticationServ
     $scope.tabTitle = tabTitle;
   };
 
-  $scope.onMatchDateeSet = function (newDate) {
+  $scope.onMatchDateSet = function (newDate) {
     $scope.selectedMatch.matchDate = $filter('date')(newDate, 'yyyy-MM-dd');
   };
 
+  $scope.getMatchNameDisable = function(){
+    if($scope.selectedMatch===undefined || $scope.selectedMatch.matchDate===undefined){
+      return true;
+    }
+    return !$scope.selectedMatch.matchDate;
+  };
+
+  $scope.getMatchObjectDisable = function(){
+    if($scope.person===undefined || $scope.person.selected===undefined){
+      return true;
+    }
+    return !$scope.person.selected;
+  }
+  ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   $scope.addMatch = function (person) {
     var myObject = JSON.parse(person);
     $scope.selectedPerson = myObject;
