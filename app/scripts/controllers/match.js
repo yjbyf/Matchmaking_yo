@@ -64,7 +64,7 @@ function MatchCtrl($scope, PersonService, $filter,UserService,AuthenticationServ
       return true;
     }
     return !$scope.person.selected;
-  }
+  };
   ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   $scope.addMatch = function (person) {
     var myObject = JSON.parse(person);

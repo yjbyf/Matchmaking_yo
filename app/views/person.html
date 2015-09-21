@@ -257,7 +257,7 @@
           <div class="modal-footer">
             <!--data-dismiss="modal"-->
             <button type="button" class="btn btn-primary" ng-click="doSave(form.$valid);"
-                    ng-disabled="btnSaveClicked  && form.$invalid">保存
+                    ng-disabled="btnSaveClicked || form.$invalid">保存
             </button>
 
           </div>
