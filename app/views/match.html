@@ -59,9 +59,10 @@
         </div>
       </div>
       <div class="tab-pane" ng-class="{active:tabTitle=='edit'}" id="edit">
-        <form class="form-horizontal" name="form" id="form">
+        <div class="form-horizontal" name="form" id="form">
           <div class="modal-body">
             <fieldset>
+              <!--first row-->
               <div class="form-group">
                 <label for="matchDate" class="col-md-1 control-label">配对日期</label>
 
@@ -91,7 +92,8 @@
                 <label for="personInfo" class="col-md-1 control-label">姓名</label>
 
                 <div class="col-md-4">
-                  <ui-select ng-model="person.selected" ng-disabled="getMatchNameDisable()" name="personInfo" id="personInfo"
+                  <ui-select ng-model="person.selected" ng-disabled="getMatchNameDisable()" name="personInfo"
+                             id="personInfo"
                              required>
                     <ui-select-match placeholder="请选择人员">{{$select.selected.name}}</ui-select-match>
                     <ui-select-choices
@@ -111,7 +113,7 @@
                   <button class="btn btn-primary" ng-disabled="getMatchNameDisable()" ng-click="">查找</button>
                 </div>
               </div>
-
+              <!--seconde row-->
               <div class="form-group">
                 <label for="serviceEmployee" class="col-md-1 control-label">服务老师</label>
 
@@ -134,7 +136,8 @@
                 <label for="matchPerson" class="col-md-1 control-label">配对对象</label>
 
                 <div class="col-md-4">
-                  <ui-select ng-model="matchPerson.selected" ng-disabled="getMatchObjectDisable()" name="matchPerson" id="matchPerson"
+                  <ui-select ng-model="matchPerson.selected" ng-disabled="getMatchObjectDisable()" name="matchPerson"
+                             id="matchPerson"
                              required>
                     <ui-select-match placeholder="请选择人员">{{$select.selected.name}}</ui-select-match>
                     <ui-select-choices
@@ -155,17 +158,44 @@
                 </div>
               </div>
 
+              <!--the third row-->
+              <div class="form-group">
+                <label for="visitResult" class="col-md-1 control-label">回访结果</label>
 
+                <div class="col-md-4">
+                  <select id="visitResult" name="visitResult" class="form-control" ng-model="selectedMatch.visitResult"
+                    >
+                    <option value="还在进行">还在进行</option>
+                    <option value="结束">结束</option>
+                    <option value="成功">成功</option>
+                  </select>
+                </div>
+                <label class="col-md-1 control-label">&nbsp;</label>
+                <div class="col-md-4">
+                  &nbsp;
+                </div>
+              </div>
+              <!--the fourth row-->
+              <div class="form-group">
+                <label for="visitRemark" class="col-md-1 control-label">回访情况</label>
+
+                <div class="col-md-9">
+                  <textarea id="visitRemark" name="visitRemark" type="" class="form-control" rows="5"
+                            ng-model="selectedMatch.visitRemark"> </textarea>
+                </div>
+
+
+              </div>
             </fieldset>
           </div>
           <div class="modal-footer">
             <!--data-dismiss="modal"-->
-            <button type="button" class="btn btn-primary">查询</button>
+            <button type="button" class="btn btn-primary">保存</button>
           </div>
-        </form>
+          </form>
+        </div>
       </div>
     </div>
+
+
   </div>
-
-
-</div>
