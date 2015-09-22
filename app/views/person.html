@@ -18,6 +18,7 @@
       <tr>
         <th>&nbsp;</th>
         <th st-sort="name">姓名</th>
+        <th st-sort="gender">性别</th>
         <th st-sort="birthDate">出生年月</th>
         <th st-sort="height">身高</th>
         <th st-sort="education">学历</th>
@@ -35,6 +36,7 @@
       <tr ng-repeat="person in displayedCollection  | filter:query | filter:{aliveFlag:'1'}">
        <td><input type="checkbox" value="{{person}}" ng-click="toggleSelection(person)"></td>
         <td>{{person.name}}</td>
+        <td>{{person.gender}}</td>
         <td>{{person.birthDate}}</td>
         <td>{{person.height}}</td>
         <td>{{person.education}}</td>

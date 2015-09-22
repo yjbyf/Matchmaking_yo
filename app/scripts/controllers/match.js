@@ -6,17 +6,22 @@
  * # PersonCtrl
  * Controller of the angularApp
  */
-function MatchCtrl($scope, PersonService, $filter,UserService,AuthenticationService,ContractService) {
+function MatchCtrl($scope, PersonService, $filter, UserService, AuthenticationService, ContractService,MatchService) {
   $scope.showAddButton = !AuthenticationService.getAdminMenuVisible();
+  //以下三行必须初始化，否则ui select选择的值无法传递给以下的变量
   $scope.person = {};
   $scope.serviceEmployee = {};
+  $scope.matchPerson = {};
+
   $scope.refresh = function () {
+    //刷新配对grid
     PersonService.getPersonList(function (data) {
       //console.log("person get:"+data);
       if (data.data === undefined) {
         return false;
       }
       $scope.persons = data.data;
+
       for (var i = 0; i < $scope.persons.length; i++) {
         var person = $scope.persons[i];
         person.id = person.pk;
@@ -29,8 +34,9 @@ function MatchCtrl($scope, PersonService, $filter,UserService,AuthenticationServ
     $('#tabs').tab();
     $scope.tabTitle = 'grid';
     $scope.refresh();
-    ContractService.getContractList(function(data){
-      if(data.data===undefined){
+    //合同数据获取
+    ContractService.getContractList(function (data) {
+      if (data.data === undefined) {
         return false;
       }
       $scope.persons = data.data;
@@ -39,71 +45,89 @@ function MatchCtrl($scope, PersonService, $filter,UserService,AuthenticationServ
         person.id = person.pk;
       }
     });
-    UserService.getUserListWithoutPriv(function(data){
+    //老师数据获取
+    UserService.getUserListWithoutPriv(function (data) {
       $scope.serviceEmployees = data.data;
     });
   });
-
+  //tab点击
   $scope.tabClick = function (tabTitle) {
     $scope.tabTitle = tabTitle;
   };
-
+  //选择日期后格式化
   $scope.onMatchDateSet = function (newDate) {
     $scope.selectedMatch.matchDate = $filter('date')(newDate, 'yyyy-MM-dd');
   };
-
-  $scope.getMatchNameDisable = function(){
-    if($scope.selectedMatch===undefined || $scope.selectedMatch.matchDate===undefined){
+  //配对日期未选择，则配对人不能选择
+  $scope.getMatchNameDisable = function () {
+    if ($scope.selectedMatch === undefined || $scope.selectedMatch.matchDate === undefined) {
       return true;
     }
     return !$scope.selectedMatch.matchDate;
   };
 
-  $scope.getMatchObjectDisable = function(){
-    if($scope.person===undefined || $scope.person.selected===undefined){
+  //配对人未选择，则配对对象不能选择
+  $scope.getMatchObjectDisable = function () {
+    if ($scope.person === undefined || $scope.person.selected === undefined) {
       return true;
     }
     return !$scope.person.selected;
   };
-  ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  $scope.addMatch = function (person) {
-    var myObject = JSON.parse(person);
-    $scope.selectedPerson = myObject;
-    $scope.btnSaveClicked = false;
-    $('#personModal').modal();
-  };
-///////////////////////////////////////////////////////////////////
-  //todo delete the following code
+  //点击新增后，展开空白编辑区域
   $scope.newRecord = function () {
-    $scope.selectedPerson = null;
+    $scope.selectedMatch = undefined;
+    $scope.serviceEmployee = undefined;
+    $scope.matchPerson = undefined;
     $scope.btnSaveClicked = false;
-    $('#personModal').modal();
+    //$('#personModal').modal();
+    $('#tabs a:last').tab('show');//tab选择显示
+    $scope.tabClick('edit'); //tab下的内容显示
   };
 
+  //新增和修改保存
   $scope.doSave = function (formValid) {
     //console.log(formValid);
     $scope.btnSaveClicked = true;
     if (!formValid) {
       return false;
     }
-    if ($scope.selectedPerson.id === undefined) {
-      $scope.selectedPerson.aliveFlag = '1';
-      //console.log($scope.selectedPerson);
-      PersonService.newPerson($scope.selectedPerson, function () {
-        $('#personModal').modal('toggle');
+    $scope.selectedMatch.nameId = $scope.person.selected.personId; //取值来源合同上的人员id//姓名
+    $scope.selectedMatch.nameContractId = $scope.person.selected.id; //合同id
+    $scope.selectedMatch.serviceEmployeeId = $scope.serviceEmployee.selected.id; //服务老师
+    //console.log($scope.matchPerson.selected);
+    $scope.selectedMatch.matchPersonId = $scope.matchPerson.selected.personId; //取值来源合同上的人员id//配对对象
+    $scope.selectedMatch.matchPersonContractId = $scope.matchPerson.selected.id; //合同id
+
+    if ($scope.selectedMatch.id === undefined) {
+      $scope.selectedMatch.aliveFlag = '1';
+      //console.log($scope.selectedMatch);
+      MatchService.newMatch($scope.selectedMatch, function () {
+        $scope.btnSaveClicked = false;
         //console.log("done add" + response);
         //refresh grid
         $scope.refresh();
       });
     } else {
       //alert("start mod");
-      PersonService.savePerson($scope.selectedPerson, function () {
+      MatchService.saveMatch($scope.selectedMatch, function () {
         $('#personModal').modal('toggle');
         //console.log("done add" + response);
         //refresh grid
         $scope.refresh();
       });
     }
+  };
+
+
+///////////////////////////////////////////////////////////////////
+  //todo delete the following code
+
+
+  $scope.addMatch = function (person) {
+    var myObject = JSON.parse(person);
+    $scope.selectedMatch = myObject;
+    $scope.btnSaveClicked = false;
+    $('#personModal').modal();
   };
 
   $scope.doDelete = function () {
@@ -135,13 +159,10 @@ function MatchCtrl($scope, PersonService, $filter,UserService,AuthenticationServ
     }
   };
 
-  $scope.onTimeSet = function (newDate) {
-    $scope.selectedPerson.birthDate = $filter('date')(newDate, 'yyyy-MM');
-  };
 
 }
 
-MatchCtrl.$inject = ['$scope', 'PersonService', '$filter','UserService','AuthenticationService','ContractService'];
+MatchCtrl.$inject = ['$scope', 'PersonService', '$filter', 'UserService', 'AuthenticationService', 'ContractService','MatchService'];
 
 angular.module('angularApp')
   .controller('MatchCtrl', MatchCtrl);

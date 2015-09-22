@@ -59,139 +59,143 @@
         </div>
       </div>
       <div class="tab-pane" ng-class="{active:tabTitle=='edit'}" id="edit">
-        <div class="form-horizontal" name="form" id="form">
-          <div class="modal-body">
-            <fieldset>
-              <!--first row-->
-              <div class="form-group">
-                <label for="matchDate" class="col-md-1 control-label">配对日期</label>
+        <div class="form-horizontal">
+          <form action="" class="form-horizontal" role="form" name="form">
+            <div class="modal-body">
+              <fieldset>
+                <!--first row-->
+                <div class="form-group">
+                  <label for="matchDate" class="col-md-1 control-label">配对日期</label>
 
-                <div class="col-md-4" data-date="" data-link-field="dtp_start"
-                     id="dtp_start">
-                  <div class="dropdown">
-                    <a class="dropdown-toggle" id="matchDate" role="button" data-toggle="dropdown" data-target="#"
-                       href="">
-                      <div class="input-group">
-                        <input type="text" name="matchDate" class="form-control"
-                               data-ng-model="selectedMatch.matchDate" readonly
-                               required/>
-                        <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-                      </div>
-                    </a>
-                    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                      <datetimepicker data-ng-model="selectedMatch.matchDate"
-                                      data-datetimepicker-config="{ dropdownSelector: '#matchDate',startView:'year',minView:'day' }"
-                                      data-on-set-time="onMatchDateSet(newDate)"/>
-                    </ul>
-                  </div>
-                  <div class="alert alert-danger" ng-show="btnSaveClicked && form.matchDate.$error.required">请选择合同开始日期
-                  </div>
-                </div>
-
-
-                <label for="personInfo" class="col-md-1 control-label">姓名</label>
-
-                <div class="col-md-4">
-                  <ui-select ng-model="person.selected" ng-disabled="getMatchNameDisable()" name="personInfo"
-                             id="personInfo"
-                             required>
-                    <ui-select-match placeholder="请选择人员">{{$select.selected.name}}</ui-select-match>
-                    <ui-select-choices
-                      repeat="person in persons | propsFilter: {name: $select.search, gender: $select.search,startDate:$select.search,endDate:$select.search}  | filter:{aliveFlag:'1'} | dateFilter:selectedMatch.matchDate:'startDate':'endDate'">
-                      <div ng-bind-html="person.name | highlight: $select.search"></div>
-                      <small>
-                        性别: <span ng-bind-html="''+person.gender | highlight: $select.search"></span>
-                        合同开始日期: <span ng-bind-html="''+person.startDate | highlight: $select.search"></span>
-                        结束日期: <span ng-bind-html="''+person.endDate | highlight: $select.search"></span>
-                      </small>
-                    </ui-select-choices>
-                  </ui-select>
-                  <div class="alert alert-danger" ng-show="btnSaveClicked && form.personInfo.$error.required">请选择人员
-                  </div>
-                </div>
-                <div class="col-md-1">
-                  <button class="btn btn-primary" ng-disabled="getMatchNameDisable()" ng-click="">查找</button>
-                </div>
-              </div>
-              <!--seconde row-->
-              <div class="form-group">
-                <label for="serviceEmployee" class="col-md-1 control-label">服务老师</label>
-
-                <div class="col-md-4">
-                  <ui-select ng-model="serviceEmployee.selected" ng-disabled="disabled" name="serviceEmployee"
-                             id="serviceEmployee"
-                             required>
-                    <ui-select-match placeholder="请选择人员">{{$select.selected.staff}}</ui-select-match>
-                    <ui-select-choices
-                      repeat="serviceEmployee in serviceEmployees | propsFilter: {staff: $select.search}">
-                      <div ng-bind-html="serviceEmployee.staff | highlight: $select.search"></div>
-                    </ui-select-choices>
-                  </ui-select>
-                  <div class="alert alert-danger" ng-show="btnSaveClicked && form.serviceEmployee.$error.required">
-                    请选择买单老师
+                  <div class="col-md-4" data-date="" data-link-field="dtp_start"
+                       id="dtp_start">
+                    <div class="dropdown">
+                      <a class="dropdown-toggle" id="matchDate" role="button" data-toggle="dropdown" data-target="#"
+                         href="">
+                        <div class="input-group">
+                          <input type="text" name="matchDate" class="form-control"
+                                 data-ng-model="selectedMatch.matchDate" readonly
+                                 required/>
+                          <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                        </div>
+                      </a>
+                      <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                        <datetimepicker data-ng-model="selectedMatch.matchDate"
+                                        data-datetimepicker-config="{ dropdownSelector: '#matchDate',startView:'year',minView:'day' }"
+                                        data-on-set-time="onMatchDateSet(newDate)"/>
+                      </ul>
+                    </div>
+                    <div class="alert alert-danger" ng-show="btnSaveClicked && form.matchDate.$error.required">请选择合同开始日期
+                    </div>
                   </div>
 
-                </div>
 
-                <label for="matchPerson" class="col-md-1 control-label">配对对象</label>
+                  <label for="personInfo" class="col-md-1 control-label">姓名</label>
 
-                <div class="col-md-4">
-                  <ui-select ng-model="matchPerson.selected" ng-disabled="getMatchObjectDisable()" name="matchPerson"
-                             id="matchPerson"
-                             required>
-                    <ui-select-match placeholder="请选择人员">{{$select.selected.name}}</ui-select-match>
-                    <ui-select-choices
-                      repeat="matchPerson in persons | propsFilter: {name: $select.search, gender: $select.search,startDate:$select.search,endDate:$select.search}  | filter:{aliveFlag:'1',gender:'!' + person.selected.gender } | dateFilter:selectedMatch.matchDate:'startDate':'endDate' ">
-                      <div ng-bind-html="matchPerson.name | highlight: $select.search"></div>
-                      <small>
-                        性别: <span ng-bind-html="''+matchPerson.gender | highlight: $select.search"></span>
-                        合同开始日期: <span ng-bind-html="''+matchPerson.startDate | highlight: $select.search"></span>
-                        结束日期: <span ng-bind-html="''+matchPerson.endDate | highlight: $select.search"></span>
-                      </small>
-                    </ui-select-choices>
-                  </ui-select>
-                  <div class="alert alert-danger" ng-show="btnSaveClicked && form.matchPerson.$error.required">请选择人员
+                  <div class="col-md-4">
+                    <ui-select ng-model="person.selected" ng-disabled="getMatchNameDisable()" name="personInfo"
+                               id="personInfo"
+                               required>
+                      <ui-select-match placeholder="请选择人员">{{$select.selected.name}}</ui-select-match>
+                      <ui-select-choices
+                        repeat="person in persons | propsFilter: {name: $select.search, gender: $select.search,startDate:$select.search,endDate:$select.search}  | filter:{aliveFlag:'1'} | dateFilter:selectedMatch.matchDate:'startDate':'endDate'">
+                        <div ng-bind-html="person.name | highlight: $select.search"></div>
+                        <small>
+                          性别: <span ng-bind-html="''+person.gender | highlight: $select.search"></span>
+                          合同开始日期: <span ng-bind-html="''+person.startDate | highlight: $select.search"></span>
+                          结束日期: <span ng-bind-html="''+person.endDate | highlight: $select.search"></span>
+                        </small>
+                      </ui-select-choices>
+                    </ui-select>
+                    <div class="alert alert-danger" ng-show="btnSaveClicked && form.personInfo.$error.required">请选择人员
+                    </div>
+                  </div>
+                  <div class="col-md-1">
+                    <button class="btn btn-primary" ng-disabled="getMatchNameDisable()" ng-click="">查找</button>
                   </div>
                 </div>
-                <div class="col-md-1">
-                  <button class="btn btn-primary" ng-disabled="getMatchObjectDisable()" ng-click="">查找</button>
-                </div>
-              </div>
+                <!--seconde row-->
+                <div class="form-group">
+                  <label for="serviceEmployee" class="col-md-1 control-label">服务老师</label>
 
-              <!--the third row-->
-              <div class="form-group">
-                <label for="visitResult" class="col-md-1 control-label">回访结果</label>
+                  <div class="col-md-4">
+                    <ui-select ng-model="serviceEmployee.selected" name="serviceEmployee"
+                               id="serviceEmployee"
+                               required>
+                      <ui-select-match placeholder="请选择人员">{{$select.selected.staff}}</ui-select-match>
+                      <ui-select-choices
+                        repeat="serviceEmployee in serviceEmployees | propsFilter: {staff: $select.search}">
+                        <div ng-bind-html="serviceEmployee.staff | highlight: $select.search"></div>
+                      </ui-select-choices>
+                    </ui-select>
+                    <div class="alert alert-danger" ng-show="btnSaveClicked && form.serviceEmployee.$error.required">
+                      请选择买单老师
+                    </div>
 
-                <div class="col-md-4">
-                  <select id="visitResult" name="visitResult" class="form-control" ng-model="selectedMatch.visitResult"
-                    >
-                    <option value="还在进行">还在进行</option>
-                    <option value="结束">结束</option>
-                    <option value="成功">成功</option>
-                  </select>
-                </div>
-                <label class="col-md-1 control-label">&nbsp;</label>
-                <div class="col-md-4">
-                  &nbsp;
-                </div>
-              </div>
-              <!--the fourth row-->
-              <div class="form-group">
-                <label for="visitRemark" class="col-md-1 control-label">回访情况</label>
+                  </div>
 
-                <div class="col-md-9">
+                  <label for="matchPerson" class="col-md-1 control-label">配对对象</label>
+
+                  <div class="col-md-4">
+
+                    <ui-select ng-model="matchPerson.selected" ng-disabled="getMatchObjectDisable()" name="matchPerson"
+                               id="matchPerson"
+                               required>
+                      <ui-select-match placeholder="请选择人员">{{$select.selected.name}}</ui-select-match>
+                      <ui-select-choices
+                        repeat="matchPerson in persons | propsFilter: {name: $select.search, gender: $select.search,startDate:$select.search,endDate:$select.search}  | filter:{aliveFlag:'1',gender:'!' + person.selected.gender } | dateFilter:selectedMatch.matchDate:'startDate':'endDate' ">
+                        <div ng-bind-html="matchPerson.name | highlight: $select.search"></div>
+                        <small>
+                          性别: <span ng-bind-html="''+matchPerson.gender | highlight: $select.search"></span>
+                          合同开始日期: <span ng-bind-html="''+matchPerson.startDate | highlight: $select.search"></span>
+                          结束日期: <span ng-bind-html="''+matchPerson.endDate | highlight: $select.search"></span>
+                        </small>
+                      </ui-select-choices>
+                    </ui-select>
+                    <div class="alert alert-danger" ng-show="btnSaveClicked && form.matchPerson.$error.required">请选择人员
+                    </div>
+                  </div>
+                  <div class="col-md-1">
+                    <button class="btn btn-primary" ng-disabled="getMatchObjectDisable()" ng-click="">查找</button>
+                  </div>
+                </div>
+
+                <!--the third row-->
+                <div class="form-group">
+                  <label for="visitResult" class="col-md-1 control-label">回访结果</label>
+
+                  <div class="col-md-4">
+                    <select id="visitResult" name="visitResult" class="form-control"
+                            ng-model="selectedMatch.visitResult"
+                      >
+                      <option value="还在进行">还在进行</option>
+                      <option value="结束">结束</option>
+                      <option value="成功">成功</option>
+                    </select>
+                  </div>
+                  <label class="col-md-1 control-label">&nbsp;</label>
+
+                  <div class="col-md-4">
+                    &nbsp;
+                  </div>
+                </div>
+                <!--the fourth row-->
+                <div class="form-group">
+                  <label for="visitRemark" class="col-md-1 control-label">回访情况</label>
+
+                  <div class="col-md-9">
                   <textarea id="visitRemark" name="visitRemark" type="" class="form-control" rows="5"
                             ng-model="selectedMatch.visitRemark"> </textarea>
+                  </div>
+
+
                 </div>
-
-
-              </div>
-            </fieldset>
-          </div>
-          <div class="modal-footer">
-            <!--data-dismiss="modal"-->
-            <button type="button" class="btn btn-primary">保存</button>
-          </div>
+              </fieldset>
+            </div>
+            <div class="modal-footer">
+              <!--data-dismiss="modal"-->
+              <button type="button" ng-disabled="btnSaveClicked  || form.$invalid" class="btn btn-primary" ng-click="doSave(form.$valid);">保存</button>
+            </div>
           </form>
         </div>
       </div>
