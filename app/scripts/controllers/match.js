@@ -6,7 +6,7 @@
  * # PersonCtrl
  * Controller of the angularApp
  */
-function MatchCtrl($scope, PersonService, $filter, UserService, AuthenticationService, ContractService,MatchService) {
+function MatchCtrl($scope, PersonService, $filter, UserService, AuthenticationService, ContractService, MatchService) {
   $scope.showAddButton = !AuthenticationService.getAdminMenuVisible();
   //以下三行必须初始化，否则ui select选择的值无法传递给以下的变量
   $scope.person = {};
@@ -15,18 +15,18 @@ function MatchCtrl($scope, PersonService, $filter, UserService, AuthenticationSe
 
   $scope.refresh = function () {
     //刷新配对grid
-    PersonService.getPersonList(function (data) {
+    MatchService.getMatchList(function (data) {
       //console.log("person get:"+data);
       if (data.data === undefined) {
         return false;
       }
-      $scope.persons = data.data;
+      $scope.matches = data.data;
 
-      for (var i = 0; i < $scope.persons.length; i++) {
-        var person = $scope.persons[i];
-        person.id = person.pk;
+      for (var i = 0; i < $scope.matches.length; i++) {
+        var match = $scope.matches[i];
+        match.id = match.pk;
       }
-      $scope.displayedCollection = [].concat($scope.persons);
+      $scope.displayedCollection = [].concat($scope.matches);//用于表格的表头排序
     });
   };
 
@@ -75,11 +75,28 @@ function MatchCtrl($scope, PersonService, $filter, UserService, AuthenticationSe
   };
   //点击新增后，展开空白编辑区域
   $scope.newRecord = function () {
-    $scope.selectedMatch = undefined;
-    $scope.serviceEmployee = undefined;
-    $scope.matchPerson = undefined;
+    $scope.selectedMatch = undefined;//整个数据对象
+    $scope.person.selected =  undefined;
+    $scope.serviceEmployee.selected = undefined;
+    $scope.matchPerson.selected = undefined;
     $scope.btnSaveClicked = false;
     //$('#personModal').modal();
+    $('#tabs a:last').tab('show');//tab选择显示
+    $scope.tabClick('edit'); //tab下的内容显示
+  };
+//点击修改，编辑区域填满原有内容
+  $scope.modRecord = function (match) {
+    //$('#form')[0].reset();
+    var json = JSON.parse(match);
+    $scope.selectedMatch = json;
+    var personInfo = ContractService.findContract($scope.persons, json.refNameContractId); //refNameId在match.java中定义
+    //console.log(json);
+    $scope.person.selected = personInfo;
+    var objectInfo = ContractService.findContract($scope.persons, json.refMatchPersonContractId);
+    $scope.matchPerson.selected = objectInfo;
+    var serviceInfo = UserService.findUser($scope.serviceEmployees, json.refServiceEmployeeId);
+    $scope.serviceEmployee.selected = serviceInfo;
+    $scope.btnSaveClicked = false;
     $('#tabs a:last').tab('show');//tab选择显示
     $scope.tabClick('edit'); //tab下的内容显示
   };
@@ -102,67 +119,59 @@ function MatchCtrl($scope, PersonService, $filter, UserService, AuthenticationSe
       $scope.selectedMatch.aliveFlag = '1';
       //console.log($scope.selectedMatch);
       MatchService.newMatch($scope.selectedMatch, function () {
-        $scope.btnSaveClicked = false;
+        //$scope.btnSaveClicked = false;
         //console.log("done add" + response);
         //refresh grid
+        $('#tabs a:first').tab('show');//tab选择显示
+        $scope.tabClick('grid'); //tab下的内容显示
         $scope.refresh();
       });
     } else {
       //alert("start mod");
       MatchService.saveMatch($scope.selectedMatch, function () {
-        $('#personModal').modal('toggle');
+        //$scope.btnSaveClicked = false;
         //console.log("done add" + response);
         //refresh grid
+        $('#tabs a:first').tab('show');//tab选择显示
+        $scope.tabClick('grid'); //tab下的内容显示
         $scope.refresh();
       });
     }
   };
 
+// selected ids
+  $scope.selectionIds = [];
+  $scope.selectionMatches = [];
 
-///////////////////////////////////////////////////////////////////
-  //todo delete the following code
-
-
-  $scope.addMatch = function (person) {
-    var myObject = JSON.parse(person);
-    $scope.selectedMatch = myObject;
-    $scope.btnSaveClicked = false;
-    $('#personModal').modal();
+  // toggle selection for a given fruit by name
+  $scope.toggleSelection = function toggleSelection(match) {
+    var idx = $scope.selectionIds.indexOf(match.id);
+    // is currently selected
+    if (idx > -1) {
+      $scope.selectionIds.splice(idx, 1);
+      $scope.selectionMatches.splice(idx, 1);
+    }
+    // is newly selected
+    else {
+      $scope.selectionIds.push(match.id);
+      $scope.selectionMatches.push(match);
+    }
+    console.log($scope.selectionMatches);
   };
 
   $scope.doDelete = function () {
     //console.log($scope.selection);
     //TODO 优化为批量删除，或者等全部删除后再刷新
-    for (var i = 0; i < $scope.selectionPersons.length; i++) {
-      var person = $scope.selectionPersons[i];
-      person.aliveFlag = '0';
-      PersonService.savePerson(person, $scope.refresh);
+    for (var i = 0; i < $scope.selectionMatches.length; i++) {
+      var match = $scope.selectionMatches[i];
+      match.aliveFlag = '0';
+      MatchService.deleteMatch(match, $scope.refresh);
     }
   };
-
-  // selected ids
-  $scope.selectionIds = [];
-  $scope.selectionPersons = [];
-
-  // toggle selection for a given fruit by name
-  $scope.toggleSelection = function toggleSelection(person) {
-    var idx = $scope.selectionIds.indexOf(person.id);
-    // is currently selected
-    if (idx > -1) {
-      $scope.selectionIds.splice(idx, 1);
-      $scope.selectionPersons.splice(idx, 1);
-    }
-    // is newly selected
-    else {
-      $scope.selectionIds.push(person.id);
-      $scope.selectionPersons.push(person);
-    }
-  };
-
 
 }
 
-MatchCtrl.$inject = ['$scope', 'PersonService', '$filter', 'UserService', 'AuthenticationService', 'ContractService','MatchService'];
+MatchCtrl.$inject = ['$scope', 'PersonService', '$filter', 'UserService', 'AuthenticationService', 'ContractService', 'MatchService'];
 
 angular.module('angularApp')
   .controller('MatchCtrl', MatchCtrl);

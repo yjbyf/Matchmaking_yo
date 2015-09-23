@@ -23,6 +23,16 @@
       }, 1000);
     }
 
+    function findContract(contracts,contractId){
+      var i;
+      for(i=0;i<contracts.length;i++){
+        if(contracts[i].id===contractId){
+          return contracts[i];
+        }
+      }
+      return undefined;
+    }
+
     function validContract(contract,callback){
       $timeout(function () {
         $http({
@@ -100,6 +110,7 @@
     service.saveContract = saveContract;
     service.deleteContract = deleteContract;
     service.validContract = validContract;
+    service.findContract = findContract;
     return service;
   }
 

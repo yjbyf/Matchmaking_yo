@@ -5,6 +5,8 @@
   function MatchService($location, $http, $cookieStore, $rootScope, $timeout, config, HostService) {
     var webServiceRootUrl = config.urlHTTP + HostService.getHost() + config.restPort + config.restUrl + "match/";
     var webServiceNewUrl = webServiceRootUrl + "new/";
+    var webServiceModUrl = webServiceRootUrl + "mod/";
+    var webServiceDelUrl = webServiceRootUrl + "del/";
 
     function getMatchList(callback) {
       /* Dummy authentication for testing, uses $timeout to simulate api call
@@ -51,7 +53,7 @@
         //alert(webServiceRootUrl+match.id);
         //alert(match);
         $http.patch(
-          webServiceRootUrl + match.id,
+          webServiceModUrl,// + match.id,
           match
         ).then(function () {
             callback();
@@ -65,19 +67,21 @@
       }, 1000);
     }
 
-    function deleteMatch(idToBeDeleted, callback) {
+    function deleteMatch(match, callback) {
       $timeout(function () {
-        $http.delete(webServiceRootUrl + idToBeDeleted).then(function () {
-          //console.log("done delete" + response);
-          //refresh grid
-          callback();
-          // this callback will be called asynchronously
-          // when the response is available
-        }, function (response) {
-          console.log("delete error" + response);
-          // called asynchronously if an error occurs
-          // or server returns response with an error status.
-        });
+        $http({
+          url: webServiceDelUrl,
+          method: "POST",
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          data: match
+        }).
+          then(function (response) {
+            callback(response);
+          }, function (response) {
+            console.log("del error" + response);
+          });
       }, 1000);
     }
 

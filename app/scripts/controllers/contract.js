@@ -85,7 +85,7 @@ function ContractCtrl($scope, ContractService,PersonService,$filter,UserService,
     var personInfo = PersonService.findPerson( $scope.persons,json.personId);
     $scope.person.selected =personInfo;
     var checkerInfo = UserService.findUser($scope.checkers,json.checkerId);
-    console.log("init:"+checkerInfo);
+    //console.log("init:"+checkerInfo);
     $scope.checker.selected = checkerInfo;
     //console.log($scope.selectedContract.personId);
     $scope.btnSaveClicked = false;
