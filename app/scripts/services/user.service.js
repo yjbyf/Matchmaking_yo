@@ -4,8 +4,9 @@
 
   function UserService($location, $http, $cookieStore, $rootScope, $timeout, config, md5, HostService) {
     var webServiceRootUrl = config.urlHTTP + HostService.getHost() + config.restPort + config.restUrl+ 'user/';
-    var webservideSearchUrl = webServiceRootUrl + "count";
-    var webservidePatchUrl = webServiceRootUrl;
+    var webservideInsertUrl = webServiceRootUrl + "new";
+    var webservideCountUrl = webServiceRootUrl + "count";
+    var webservideModUrl = webServiceRootUrl + "mod";
     var webservidePatchSelfUrl = config.urlHTTP + HostService.getHost() + config.restPort + config.noPrivUrl + "change_own_password";
     var webServiceUserNoPrivUrl = config.urlHTTP + HostService.getHost() + config.restPort + config.noPrivUrl +"userListNoPriv";
 
@@ -57,7 +58,7 @@
       $timeout(function () {
 
         $http({
-          url: webservideSearchUrl,
+          url: webservideCountUrl,
           method: "GET",
           params: {
             "userName": userName,
@@ -74,7 +75,7 @@
     function insertRecord(user,callback) {
       $timeout(function () {
         $http({
-          url: webServiceRootUrl,
+          url: webservideInsertUrl,
           method: "POST",
           headers: {
             'Content-Type': 'application/json'
@@ -95,17 +96,13 @@
     }
 
     function setRecordByAdmin(user, callback) {
-      var id = user.id;
+     // var id = user.id;
       var password = user.password;
-      var params = {
-        'password': md5.createHash(password),
-        'staff': user.staff,
-        'aliveFlag': user.aliveFlag
-      };
+      user.password = md5.createHash(password);
       $timeout(function () {
-        $http.patch(
-          webservidePatchUrl + id,
-          params
+        $http.post(
+          webservideModUrl,
+          user
         ).then(function () {
             callback();
             // this callback will be called asynchronously

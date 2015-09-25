@@ -4,7 +4,8 @@
 
   function PersonService($location, $http, $cookieStore, $rootScope, $timeout, config, HostService) {
     var webServiceRootUrl = config.urlHTTP + HostService.getHost() + config.restPort + config.restUrl + "person/";
-
+    var webServiceNewUrl = config.urlHTTP + HostService.getHost() + config.restPort + config.restUrl + "person/new/";
+    var webServiceModUrl = config.urlHTTP + HostService.getHost() + config.restPort + config.restUrl + "person/mod/";
     function getPersonList(callback) {
       /* Dummy authentication for testing, uses $timeout to simulate api call
        ----------------------------------------------*/
@@ -35,17 +36,12 @@
       person.createdBy = $rootScope.globals.currentUser.id;
       $timeout(function () {
         $http({
-          url: webServiceRootUrl,
+          url: webServiceNewUrl,
           method: "POST",
           headers: {
             'Content-Type': 'application/json'
           },
           data: person
-          /*data: {
-           'name': person.name,
-           'gender': person.gender,
-           'birthDate':person.birthDate
-           }*/
         }).
           then(function (response) {
             callback(response);
@@ -59,8 +55,8 @@
       $timeout(function () {
         //alert(webServiceRootUrl+person.id);
         //alert(person);
-        $http.patch(
-          webServiceRootUrl + person.id,
+        $http.post(
+          webServiceModUrl,
           person
         ).then(function () {
             callback();

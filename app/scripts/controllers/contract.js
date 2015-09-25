@@ -22,13 +22,7 @@ function ContractCtrl($scope, ContractService,PersonService,$filter,UserService,
         return false;
       }
       $scope.contracts = data.data._embedded.contract;*/
-      for (var i = 0; i < $scope.contracts.length; i++) {
-        var contract = $scope.contracts[i];
-        //var href = contract._links.self.href;
-        //var id = href.substr(href.lastIndexOf("/") + 1);
-        //console.log(id);
-        contract.id = contract.pk;
-      }
+
       //$scope.rowCollection = $scope.contracts;
       $scope.displayedCollection = [].concat($scope.contracts);
 
@@ -46,13 +40,7 @@ function ContractCtrl($scope, ContractService,PersonService,$filter,UserService,
       }
       $scope.persons = data.data;
       //$scope.persons = data.data._embedded.person;
-      for (var i = 0; i < $scope.persons.length; i++) {
-        var person = $scope.persons[i];
-        //var href = contract._links.self.href;
-        //var id = href.substr(href.lastIndexOf("/") + 1);
-        //console.log(id);
-        person.id = person.pk;
-      }
+
       //$scope.people = $scope.persons;
       //console.log("contract get:"+data);
     });
@@ -82,9 +70,9 @@ function ContractCtrl($scope, ContractService,PersonService,$filter,UserService,
     //$('#form')[0].reset();
     var json = JSON.parse(contract);
     $scope.selectedContract = json;
-    var personInfo = PersonService.findPerson( $scope.persons,json.personId);
+    var personInfo = PersonService.findPerson( $scope.persons,json.person);
     $scope.person.selected =personInfo;
-    var checkerInfo = UserService.findUser($scope.checkers,json.checkerId);
+    var checkerInfo = UserService.findUser($scope.checkers,json.checker);
     //console.log("init:"+checkerInfo);
     $scope.checker.selected = checkerInfo;
     //console.log($scope.selectedContract.personId);
@@ -106,6 +94,7 @@ function ContractCtrl($scope, ContractService,PersonService,$filter,UserService,
     ContractService.validContract($scope.selectedContract,function(data){
       if(data.data.result===config.failed){
          FlashService.Error("此客户合同日期与其它合同日期重叠");
+         $scope.btnSaveClicked = false;
          return false;
       }
       if ($scope.selectedContract.id === undefined) {
@@ -136,7 +125,7 @@ function ContractCtrl($scope, ContractService,PersonService,$filter,UserService,
     for(var i=0;i<$scope.selectionContracts.length;i++){
       var contract = $scope.selectionContracts[i];
       contract.aliveFlag = '0';
-      ContractService.saveContract(contract,$scope.refresh);
+      ContractService.deleteContract(contract,$scope.refresh);
     }
 
   };

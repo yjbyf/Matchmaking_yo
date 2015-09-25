@@ -4,7 +4,9 @@
 
   function ContractService($location, $http, $cookieStore, $rootScope, $timeout, config,HostService) {
     var webServiceRootUrl = config.urlHTTP + HostService.getHost() + config.restPort + config.restUrl + "contract/";
-    var webServiceSaveUrl = webServiceRootUrl + "save/";
+    var webServiceNewUrl = webServiceRootUrl + "new/";
+    var webServiceSaveUrl = webServiceRootUrl + "mod/";
+    var webServiceDelUrl = webServiceRootUrl + "del/";
     var webServiceValidUrl = webServiceRootUrl + "valid/";
 
     function getContractList(callback) {
@@ -54,7 +56,7 @@
       contract.createdBy = $rootScope.globals.currentUser.id;
       $timeout(function () {
         $http({
-          url: webServiceSaveUrl,
+          url: webServiceNewUrl,
           method: "POST",
           headers: {
             'Content-Type': 'application/json'
@@ -73,7 +75,7 @@
       $timeout(function () {
         //alert(webServiceRootUrl+Contract.id);
         //alert(Contract);
-        $http.patch(
+        $http.post(
           webServiceSaveUrl,//+contract.id,
           contract
         ).then(function () {
@@ -88,19 +90,20 @@
       }, 1000);
     }
 
-    function deleteContract(idToBeDeleted,callback){
+    function deleteContract(contract,callback){
       $timeout(function () {
-        $http.delete(webServiceRootUrl + idToBeDeleted).then(function () {
-          //console.log("done delete" + response);
-          //refresh grid
-          callback();
-          // this callback will be called asynchronously
-          // when the response is available
-        }, function (response) {
-          console.log("delete error" + response);
-          // called asynchronously if an error occurs
-          // or server returns response with an error status.
-        });
+        $http.post(
+          webServiceDelUrl,//+contract.id,
+          contract
+        ).then(function () {
+            callback();
+            // this callback will be called asynchronously
+            // when the response is available
+          }, function (response) {
+            console.log("delete error" + response);
+            // called asynchronously if an error occurs
+            // or server returns response with an error status.
+          });
       }, 1000);
     }
 

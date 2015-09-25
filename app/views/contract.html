@@ -42,7 +42,7 @@
         <th st-sort="fee">收费</th>
         <th st-sort="serviceTimes">服务次数</th>
         <th st-sort="checkerName">买单老师</th>
-        <th st-sort="vatNO">发票号</th>
+        <th st-sort="vatNo">发票号</th>
         <th st-sort="startDate">合同开始日期</th>
         <th st-sort="endDate">合同结束日期</th>
         <th>&nbsp;</th>
@@ -57,7 +57,7 @@
         <td>{{contract.fee}}</td>
         <td>{{contract.serviceTimes}}</td>
         <td>{{contract.checkerName}}</td>
-        <td>{{contract.vatNO}}</td>
+        <td>{{contract.vatNo}}</td>
         <td>{{contract.startDate}}</td>
         <td>{{contract.endDate}}</td>
         <td>
@@ -169,13 +169,13 @@
               </div>
 
               <div class="form-group">
-                <label for="vatNO" class="col-md-2 control-label">发票号</label>
+                <label for="vatNo" class="col-md-2 control-label">发票号</label>
 
                 <div class="input-group date eventTitle col-md-6">
-                  <input class="form-control" size="16" type="text" ng-model="selectedContract.vatNO" id="vatNO"
-                         name="vatNO"
+                  <input class="form-control" size="16" type="text" ng-model="selectedContract.vatNo" id="vatNo"
+                         name="vatNo"
                          required/>
-                  <div class="alert alert-danger" ng-show="btnSaveClicked && form.vatNO.$error.required">请输入发票号</div>
+                  <div class="alert alert-danger" ng-show="btnSaveClicked && form.vatNo.$error.required">请输入发票号</div>
                 </div>
               </div>
 

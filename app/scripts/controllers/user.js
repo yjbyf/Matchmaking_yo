@@ -25,13 +25,7 @@ angular.module('angularApp')
             return false;
           }
           $scope.users = data.data._embedded.user;*/
-          for (var i = 0; i < $scope.users.length; i++) {
-            var user = $scope.users[i];
-            //var href = user._links.self.href;
-            //var id = href.substr(href.lastIndexOf("/") + 1);
-            //console.log(id);
-            user.id = user.pk;
-          }
+
         });
         //console.log(config.apiUrl);
 
@@ -107,6 +101,7 @@ angular.module('angularApp')
           UserService.getCount($scope.selectedUser.userName, function (result) {
             if (result > 0) {
               FlashService.Error("已有此用户名" + $scope.selectedUser.userName);
+              $scope.btnSaveClicked = false;
               return false;
             } else {
               UserService.insertRecord($scope.selectedUser, function () {

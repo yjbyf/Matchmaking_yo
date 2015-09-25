@@ -15,19 +15,7 @@ function PersonCtrl($scope, PersonService, $filter,AuthenticationService) {
         return false;
       }
       $scope.persons = data.data;
-      /*
-      if(data.data._embedded===undefined){
-        return false;
-      }
-
-      $scope.persons = data.data._embedded.person;*/
-      for (var i = 0; i < $scope.persons.length; i++) {
-        var person = $scope.persons[i];
-        //var href = person._links.self.href;
-        //var id = href.substr(href.lastIndexOf("/") + 1);
-        //console.log(id);
-        person.id = person.pk;
-      }
+    
       $scope.displayedCollection = [].concat($scope.persons);
       //console.log("person get:"+data);
     });
@@ -108,7 +96,7 @@ function PersonCtrl($scope, PersonService, $filter,AuthenticationService) {
   };
 
   $scope.onTimeSet = function (newDate) {
-    $scope.selectedPerson.birthDate = $filter('date')(newDate, 'yyyy-MM');
+    $scope.selectedPerson.birthDate = $filter('date')(newDate, 'yyyy-MM-dd');
   };
 
 }

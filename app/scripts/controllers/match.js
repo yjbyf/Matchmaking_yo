@@ -22,10 +22,7 @@ function MatchCtrl($scope, PersonService, $filter, UserService, AuthenticationSe
       }
       $scope.matches = data.data;
 
-      for (var i = 0; i < $scope.matches.length; i++) {
-        var match = $scope.matches[i];
-        match.id = match.pk;
-      }
+
       $scope.displayedCollection = [].concat($scope.matches);//用于表格的表头排序
     });
   };
@@ -40,10 +37,7 @@ function MatchCtrl($scope, PersonService, $filter, UserService, AuthenticationSe
         return false;
       }
       $scope.persons = data.data;
-      for (var i = 0; i < $scope.persons.length; i++) {
-        var person = $scope.persons[i];
-        person.id = person.pk;
-      }
+
     });
     //老师数据获取
     UserService.getUserListWithoutPriv(function (data) {
