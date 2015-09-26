@@ -21,8 +21,6 @@ function MatchCtrl($scope, PersonService, $filter, UserService, AuthenticationSe
         return false;
       }
       $scope.matches = data.data;
-
-
       $scope.displayedCollection = [].concat($scope.matches);//用于表格的表头排序
     });
 
@@ -32,7 +30,7 @@ function MatchCtrl($scope, PersonService, $filter, UserService, AuthenticationSe
         return false;
       }
       $scope.persons = data.data;
-
+      $scope.displayedPersonCollection = [].concat($scope.persons);//用于表格的表头排序
     });
   };
 
@@ -169,6 +167,31 @@ function MatchCtrl($scope, PersonService, $filter, UserService, AuthenticationSe
     console.log("date change");
   };
 
+  $scope.searchPerson = function(){
+    $scope.selectedPersonType = "1";
+    $('#personModal').modal();
+  };
+
+  $scope.searchObject = function(){
+    $scope.selectedPersonType = "2";
+    $('#personModal').modal();
+  };
+
+  $scope.doSelect = function(person){
+    if($scope.selectedPersonType==="1"){
+      $scope.person.selected = person;
+    }
+    if($scope.selectedPersonType==="2"){
+      $scope.matchPerson.selected = person;
+    }
+    $('#personModal').modal('toggle');
+  };
+  // when .modal-wide opened, set content-body height based on browser height; 200 is appx height of modal padding, modal title and button bar
+
+  $(".modal-wide").on("show.bs.modal", function() {
+    var height = $(window).height() - 200;
+    $(this).find(".modal-body").css("max-height", height);
+  });
 }
 
 MatchCtrl.$inject = ['$scope', 'PersonService', '$filter', 'UserService', 'AuthenticationService', 'ContractService', 'MatchService'];

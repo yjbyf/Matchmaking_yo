@@ -28,6 +28,7 @@
         <th st-sort="salary">年薪(万)</th>
         <th st-sort="family">家庭情况</th>
         <th st-sort="house">住房</th>
+        <th st-sort="marriedHis">婚史</th>
         <th st-sort="phone">联系电话</th>
         <th st-sort="requirement">择偶要求</th>
         <th>&nbsp;</th>
@@ -47,6 +48,7 @@
         <td>{{person.salary}}</td>
         <td>{{person.family}}</td>
         <td>{{person.house}}</td>
+        <td>{{person.marriedHis}}</td>
         <td>{{person.phone}}</td>
         <td>{{person.requirement}}</td>
         <td>
@@ -226,6 +228,18 @@
                   </select>
 
                   <div class="alert alert-danger" ng-show="btnSaveClicked && form.house.$error.required">请输入住房</div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="marriedHis" class="col-md-2 control-label">婚史</label>
+
+                <div class="input-group date eventTitle col-md-6">
+                  <input class="form-control" size="16" type="text" ng-model="selectedPerson.marriedHis" id="marriedHis"
+                         name="marriedHis"
+                         required/>
+
+                  <div class="alert alert-danger" ng-show="btnSaveClicked && form.marriedHis.$error.required">请输入婚史</div>
                 </div>
               </div>
 
