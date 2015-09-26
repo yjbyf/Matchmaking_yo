@@ -25,12 +25,7 @@ function MatchCtrl($scope, PersonService, $filter, UserService, AuthenticationSe
 
       $scope.displayedCollection = [].concat($scope.matches);//用于表格的表头排序
     });
-  };
 
-  $(document).ready(function () {
-    $('#tabs').tab();
-    $scope.tabTitle = 'grid';
-    $scope.refresh();
     //合同数据获取
     ContractService.getContractList(function (data) {
       if (data.data === undefined) {
@@ -39,6 +34,13 @@ function MatchCtrl($scope, PersonService, $filter, UserService, AuthenticationSe
       $scope.persons = data.data;
 
     });
+  };
+
+  $(document).ready(function () {
+    $('#tabs').tab();
+    $scope.tabTitle = 'grid';
+    $scope.refresh();
+
     //老师数据获取
     UserService.getUserListWithoutPriv(function (data) {
       $scope.serviceEmployees = data.data;
@@ -83,12 +85,12 @@ function MatchCtrl($scope, PersonService, $filter, UserService, AuthenticationSe
     //$('#form')[0].reset();
     var json = JSON.parse(match);
     $scope.selectedMatch = json;
-    var personInfo = ContractService.findContract($scope.persons, json.refNameContractId); //refNameId在match.java中定义
+    var personInfo = ContractService.findContract($scope.persons, json.nameContract); //refNameId在match.java中定义
     //console.log(json);
     $scope.person.selected = personInfo;
-    var objectInfo = ContractService.findContract($scope.persons, json.refMatchPersonContractId);
+    var objectInfo = ContractService.findContract($scope.persons, json.matchPersonContract);
     $scope.matchPerson.selected = objectInfo;
-    var serviceInfo = UserService.findUser($scope.serviceEmployees, json.refServiceEmployeeId);
+    var serviceInfo = UserService.findUser($scope.serviceEmployees, json.serviceEmployee);
     $scope.serviceEmployee.selected = serviceInfo;
     $scope.btnSaveClicked = false;
     $('#tabs a:last').tab('show');//tab选择显示
@@ -102,11 +104,11 @@ function MatchCtrl($scope, PersonService, $filter, UserService, AuthenticationSe
     if (!formValid) {
       return false;
     }
-    $scope.selectedMatch.nameId = $scope.person.selected.personId; //取值来源合同上的人员id//姓名
+    $scope.selectedMatch.nameId = $scope.person.selected.person; //取值来源合同上的人员id//姓名
     $scope.selectedMatch.nameContractId = $scope.person.selected.id; //合同id
     $scope.selectedMatch.serviceEmployeeId = $scope.serviceEmployee.selected.id; //服务老师
     //console.log($scope.matchPerson.selected);
-    $scope.selectedMatch.matchPersonId = $scope.matchPerson.selected.personId; //取值来源合同上的人员id//配对对象
+    $scope.selectedMatch.matchPersonId = $scope.matchPerson.selected.person; //取值来源合同上的人员id//配对对象
     $scope.selectedMatch.matchPersonContractId = $scope.matchPerson.selected.id; //合同id
 
     if ($scope.selectedMatch.id === undefined) {
@@ -161,6 +163,10 @@ function MatchCtrl($scope, PersonService, $filter, UserService, AuthenticationSe
       match.aliveFlag = '0';
       MatchService.deleteMatch(match, $scope.refresh);
     }
+  };
+
+  $scope.changeMatchDate = function(){
+    console.log("date change");
   };
 
 }

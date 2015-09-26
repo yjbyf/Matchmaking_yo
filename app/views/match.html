@@ -26,10 +26,10 @@
             <tr>
               <th>&nbsp;</th>
               <th st-sort="matchDate">配对日期</th>
-              <th st-sort="name">姓名</th>
+              <th st-sort="personName">姓名</th>
               <th st-sort="gender">性别</th>
-              <th st-sort="serviceEmployee">服务老师</th>
-              <th st-sort="matchPerson">配对对象</th>
+              <th st-sort="serviceEmployeeName">服务老师</th>
+              <th st-sort="matchPersonName">配对对象</th>
               <th st-sort="visitResult">回访结果</th>
               <th st-sort="visitRemark">回访情况说明</th>
               <th>&nbsp;</th>
@@ -39,10 +39,10 @@
             <tr ng-repeat="match in displayedCollection  | filter:query | filter:{aliveFlag:'1'}">
               <td><input type="checkbox" value="{{person}}" ng-click="toggleSelection(match)"></td>
               <td>{{match.matchDate}}</td>
-              <td>{{match.refName}}</td>
-              <td>{{match.refGender}}</td>
-              <td>{{match.refServiceEmployee}}</td>
-              <td>{{match.refMatchPerson}}</td>
+              <td>{{match.personName}}</td>
+              <td>{{match.gender}}</td>
+              <td>{{match.serviceEmployeeName}}</td>
+              <td>{{match.matchPersonName}}</td>
               <td>{{match.visitResult}}</td>
               <td>{{match.visitRemark}}</td>
               <td>
@@ -76,7 +76,7 @@
                          href="">
                         <div class="input-group">
                           <input type="text" name="matchDate" class="form-control"
-                                 data-ng-model="selectedMatch.matchDate" readonly
+                                 data-ng-model="selectedMatch.matchDate" ng-change="changeMatchDate()" readonly
                                  required/>
                           <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
                         </div>
@@ -87,14 +87,14 @@
                                         data-on-set-time="onMatchDateSet(newDate)"/>
                       </ul>
                     </div>
-                    <div class="alert alert-danger" ng-show="btnSaveClicked && form.matchDate.$error.required">请选择合同开始日期
+                    <div class="alert alert-danger" ng-show="btnSaveClicked && form.matchDate.$error.required">请选择配对日期
                     </div>
                   </div>
 
 
                   <label for="personInfo" class="col-md-1 control-label">姓名</label>
 
-                  <div class="col-md-4">
+                  <div class="col-md-5">
                     <ui-select ng-model="person.selected" ng-disabled="getMatchNameDisable()" name="personInfo"
                                id="personInfo"
                                required>
@@ -104,8 +104,8 @@
                         <div ng-bind-html="person.name | highlight: $select.search"></div>
                         <small>
                           性别: <span ng-bind-html="''+person.gender | highlight: $select.search"></span>
-                          合同开始日期: <span ng-bind-html="''+person.startDate | highlight: $select.search"></span>
-                          结束日期: <span ng-bind-html="''+person.endDate | highlight: $select.search"></span>
+                          已配对:<span ng-bind-html="''+person.matchTimes+'次' | highlight: $select.search"></span>
+                          合同日期: <span ng-bind-html="''+person.startDate+'至'+person.endDate | highlight: $select.search"></span>
                         </small>
                       </ui-select-choices>
                     </ui-select>
@@ -138,7 +138,7 @@
 
                   <label for="matchPerson" class="col-md-1 control-label">配对对象</label>
 
-                  <div class="col-md-4">
+                  <div class="col-md-5">
 
                     <ui-select ng-model="matchPerson.selected" ng-disabled="getMatchObjectDisable()" name="matchPerson"
                                id="matchPerson"
@@ -149,8 +149,8 @@
                         <div ng-bind-html="matchPerson.name | highlight: $select.search"></div>
                         <small>
                           性别: <span ng-bind-html="''+matchPerson.gender | highlight: $select.search"></span>
-                          合同开始日期: <span ng-bind-html="''+matchPerson.startDate | highlight: $select.search"></span>
-                          结束日期: <span ng-bind-html="''+matchPerson.endDate | highlight: $select.search"></span>
+                          已配对:<span ng-bind-html="''+matchPerson.matchTimes+'次' | highlight: $select.search"></span>
+                          合同日期: <span ng-bind-html="''+matchPerson.startDate+'至'+matchPerson.endDate | highlight: $select.search"></span>
                         </small>
                       </ui-select-choices>
                     </ui-select>
