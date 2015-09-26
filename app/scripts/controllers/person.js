@@ -15,7 +15,7 @@ function PersonCtrl($scope, PersonService, $filter,AuthenticationService) {
         return false;
       }
       $scope.persons = data.data;
-    
+
       $scope.displayedCollection = [].concat($scope.persons);
       //console.log("person get:"+data);
     });
@@ -97,6 +97,17 @@ function PersonCtrl($scope, PersonService, $filter,AuthenticationService) {
 
   $scope.onTimeSet = function (newDate) {
     $scope.selectedPerson.birthDate = $filter('date')(newDate, 'yyyy-MM-dd');
+    $scope.selectedPerson.constellation = $scope.constellation($scope.selectedPerson.birthDate);
+  };
+
+  $scope.constellation = function(date) {
+    var mon = date.substring(5,7);
+    var day = date.substring(8,10);
+    console.log(mon+"-"+day);
+    var s = "魔羯水瓶双鱼牡羊金牛双子巨蟹狮子处女天秤天蝎射手魔羯";
+    var d = [20, 19, 21, 21, 21, 22, 23, 23, 23, 23, 22, 22];
+    var i = mon * 2 - (day < d[mon - 1] ? 2 : 0);
+    return s.substring(i, i + 2) + "座";
   };
 
 }
