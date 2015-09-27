@@ -7,6 +7,67 @@
  * Controller of the angularApp
  */
 function MatchCtrl($scope, PersonService, $filter, UserService, AuthenticationService, ContractService, MatchService) {
+  $scope.initSearch = function (items,itemSearch){
+    angular.forEach(items, function(item){
+      itemSearch[item.name] = true;
+    });
+  };
+  //查询条件数据初始化
+  $scope.educations = [{name:"小学"},{name:"中学"},{name:"高中"},{name:"大专"},{name:"大本"},{name:"硕士"},{name:"博士"}];
+  $scope.educationSearch={};
+  $scope.genders = [{name:"男"},{name:"女"}];
+  $scope.genderSearch={};
+  $scope.constellations = [{name:"魔羯座"},{name:"水瓶座"},{name:"双鱼座"},{name:"牡羊座"},{name:"金牛座"},{name:"双子座"},{name:"巨蟹座"},
+    {name:"狮子座"},{name:"处女座"},{name:"天秤座"},{name:"天蝎座"},{name:"射手座"},{name:"魔羯座"}];
+  $scope.constellationSearch={};
+
+  $scope.houses = [{name:"独立婚房"},{name:"父母同住"},{name:"无婚房"}];
+  $scope.houseSearch = {};
+  $scope.initSearch($scope.educations,$scope.educationSearch);
+  $scope.initSearch($scope.genders,$scope.genderSearch);
+  $scope.initSearch($scope.constellations,$scope.constellationSearch);
+  $scope.initSearch($scope.houses,$scope.houseSearch);
+
+
+  //查询相关过滤器
+  $scope.searchBy = function (prop,list) {
+    return function (item) {
+      var name = item[prop];
+      if (list[name] === true ) {
+        return true;
+      }
+    };
+  };
+
+  $scope.greaterThan = function(prop, val){
+    return function(item){
+      if(val===undefined||val===null||val.toString().trim()==="") {return true;}
+      return item[prop] >= val;
+    };
+  };
+
+  $scope.lowerThan = function(prop, val){
+    return function(item){
+      if(val===undefined||val===null||val.toString().trim()==="") {return true;}
+      return item[prop] <= val;
+    };
+  };
+
+  $scope.likeSearch= function (prop,val) {
+    return function (item) {
+      //console.log(prop);
+      //console.log(val);
+      if(val===undefined||val===null||val.toString().trim()==="") {return true;}
+      var propValue = item[prop];
+      if(propValue===undefined||propValue===null||propValue.toString().trim()==="") {return true;}
+      console.log(prop);
+      if(propValue.indexOf(val)>=0){
+        return true;
+      }
+    };
+  };
+
+  //管理员无增加权限
   $scope.showAddButton = !AuthenticationService.getAdminMenuVisible();
   //以下三行必须初始化，否则ui select选择的值无法传递给以下的变量
   $scope.person = {};
