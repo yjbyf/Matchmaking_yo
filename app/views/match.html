@@ -8,7 +8,7 @@
 
     <div id="my-tab-content" class="tab-content">
       <div class="tab-pane" ng-class="{active:tabTitle=='grid'}" id="grid">
-        <form action="" class="form-horizontal" role="form" name="searchForm">
+        <form action="" class="form-horizontal" role="searchForm" name="searchForm">
           <fieldset>
             <div class="form-group">
               <label for="query" class="col-md-2 control-label">查询</label>
@@ -115,8 +115,7 @@
                     </div>
                   </div>
                   <div class="col-md-1">
-                    <button class="btn btn-primary" ng-disabled="getMatchNameDisable()" ng-click="searchPerson()">查找
-                    </button>
+                    <a href="" class="btn btn-primary" data-toggle="modal" ng-disabled="getMatchNameDisable()"   ng-click="searchPerson()">查找</a>
                   </div>
                 </div>
                 <!--seconde row-->
@@ -163,8 +162,7 @@
                     </div>
                   </div>
                   <div class="col-md-1">
-                    <button class="btn btn-primary" ng-disabled="getMatchObjectDisable()" ng-click="searchObject()">查找
-                    </button>
+                    <a href="" class="btn btn-primary" data-toggle="modal" ng-disabled="getMatchNameDisable()"   ng-click="searchObject()">查找</a>
                   </div>
                 </div>
 
