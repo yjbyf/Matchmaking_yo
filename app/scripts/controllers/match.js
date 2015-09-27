@@ -142,7 +142,7 @@ function MatchCtrl($scope, PersonService, $filter, UserService, AuthenticationSe
 //点击修改，编辑区域填满原有内容
   $scope.modRecord = function (match) {
     //$('#form')[0].reset();
-    var json = JSON.parse(match);
+    var json = match;//JSON.parse(match);
     $scope.selectedMatch = json;
     var personInfo = ContractService.findContract($scope.persons, json.nameContract); //refNameId在match.java中定义
     //console.log(json);
